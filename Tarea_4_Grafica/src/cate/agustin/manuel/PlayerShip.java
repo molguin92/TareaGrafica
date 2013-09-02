@@ -34,6 +34,8 @@ public class PlayerShip implements SpaceObject{
 	private List<Bullet> removeList; //Lista de balas a ser borradas.
 	private float fCounter; //Contador para disparar.
 	private float renderCounter;
+	private float LCounter;
+	private float RCounter;
 	private float width;
 	private float height;
 	private int spriteNr;
@@ -54,6 +56,9 @@ public class PlayerShip implements SpaceObject{
 		}
 
 		fCounter = 1;
+		renderCounter = 0;
+		LCounter = 0;
+		RCounter = 0;
 		bulletList = new ArrayList<Bullet>();
 		removeList = new ArrayList<Bullet>();
 
@@ -94,18 +99,37 @@ public class PlayerShip implements SpaceObject{
 
 		if(Gdx.input.isKeyPressed(Keys.UP)){
 			moveShip(UP, delta);
+			spriteNr = 2;
+			LCounter = 0;
+			RCounter = 0;
 		}
 
 		if(Gdx.input.isKeyPressed(Keys.DOWN)){
 			moveShip(DOWN, delta);
+			LCounter = 0;
+			RCounter = 0;
 		}
 
 		if(Gdx.input.isKeyPressed(Keys.LEFT)){
 			moveShip(LEFT, delta);
+			RCounter = 0;
+			if(LCounter < 0.2){
+				spriteNr = 4;
+				LCounter += delta;
+			} else {
+				spriteNr = 5;
+			}
 		}
 
 		if(Gdx.input.isKeyPressed(Keys.RIGHT)){
 			moveShip(RIGHT, delta);
+			LCounter = 0;
+			if(RCounter < 0.2){
+				spriteNr = 6;
+				RCounter += delta;
+			} else {
+				spriteNr = 7;
+			}
 		}
 
 		fire(delta);
@@ -153,9 +177,11 @@ public class PlayerShip implements SpaceObject{
 
 	private void fire(float delta){
 
-		if(fCounter > 0.08){
-			Sprite bullet = new Sprite(bSprite);
-			bulletList.add(new Bullet(position.x + width/2.0f, position.y, bullet, Bullet.UP, 1500));
+		if(fCounter > 0.16){
+			Sprite bulletl = new Sprite(bSprite);
+			Sprite bulletr = new Sprite(bSprite);
+			bulletList.add(new Bullet(position.x + width/6.0f, position.y + height/2.0f, bulletl, Bullet.UP, 1500));
+			bulletList.add(new Bullet(position.x + 5 * width/6.0f, position.y + height/2.0f, bulletr, Bullet.UP, 1500));
 			fCounter = 0;
 		} else {
 			fCounter += delta;
