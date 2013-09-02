@@ -9,10 +9,11 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Tarea_4_Grafica";
 		cfg.useGL20 = true;
-		cfg.width = 800;
-		cfg.height = 600;
+		cfg.width = 1366;
+		cfg.height = 768;
 		cfg.useCPUSynch = false;
 		cfg.vSyncEnabled = true;
+		cfg.fullscreen = true;
 		
 		new LwjglApplication(new Mini2DxGame(new MainGame()), cfg);
 	}

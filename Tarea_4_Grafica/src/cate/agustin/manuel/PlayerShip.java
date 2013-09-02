@@ -110,7 +110,7 @@ public class PlayerShip implements SpaceObject{
 			RCounter = 0;
 		}
 
-		if(Gdx.input.isKeyPressed(Keys.LEFT)){
+		if(Gdx.input.isKeyPressed(Keys.LEFT) && !Gdx.input.isKeyPressed(Keys.RIGHT)){
 			moveShip(LEFT, delta);
 			RCounter = 0;
 			if(LCounter < 0.2){
@@ -121,7 +121,7 @@ public class PlayerShip implements SpaceObject{
 			}
 		}
 
-		if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+		if(Gdx.input.isKeyPressed(Keys.RIGHT) && !Gdx.input.isKeyPressed(Keys.LEFT)){
 			moveShip(RIGHT, delta);
 			LCounter = 0;
 			if(RCounter < 0.2){
