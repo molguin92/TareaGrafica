@@ -35,6 +35,7 @@ public class Enemy_Simple implements SpaceObject{
 		fCounter = 1;
 		
 		sprite.setPosition(position.x, position.y);
+		sprite.flip(false, true);
 		
 		deleteMe = false;
 		

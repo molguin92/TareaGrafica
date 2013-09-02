@@ -17,14 +17,14 @@ public class EnemyManager {
 	 */
 	
 	private GameContainer gc;
-	private AssetManager am;
+	private Sprite[] sprites;
 	private List<SpaceObject> eList;
 	private List<SpaceObject> removeList;
 	private List<PlayerShip> playas;
 
-	public EnemyManager(GameContainer gc, AssetManager am, List<PlayerShip> playas) {
+	public EnemyManager(GameContainer gc, Sprite[] sprites, List<PlayerShip> playas) {
 		this.gc = gc;
-		this.am = am;
+		this.sprites = sprites;
 		this.playas = playas;
 		
 		eList = new ArrayList<SpaceObject>();
@@ -35,21 +35,18 @@ public class EnemyManager {
 	
 	public void directSpawn(float X, float Y, int type){
 		
-		Texture tex = am.get("data/player2.png", Texture.class);
-		Texture bullet = am.get("data/bullet1.png", Texture.class);
-		
 		switch (type) {
 			case 1:
-				eList.add(new Enemy_Simple(new Sprite(tex), X, Y, new Sprite(bullet), gc));
+				eList.add(new Enemy_Simple(new Sprite(sprites[0]), X, Y, new Sprite(sprites[4]), gc));
 				break;
 			case 2:
-				eList.add(new Enemy_Sin(new Sprite(tex), X, Y, new Sprite(bullet), gc));
+				eList.add(new Enemy_Sin(new Sprite(sprites[1]), X, Y, new Sprite(sprites[4]), gc));
 				break;
 			case 3:
-				eList.add(new Enemy_Kamikaze(new Sprite(tex), X, Y, new Sprite(bullet), gc, playas));
+				eList.add(new Enemy_Kamikaze(new Sprite(sprites[2]), X, Y, new Sprite(sprites[4]), gc, playas));
 				break;
 			case 4:
-				eList.add(new Enemy_Turret(new Sprite(tex), X, Y, new Sprite(bullet), gc, playas));
+				eList.add(new Enemy_Turret(new Sprite(sprites[0]), X, Y, new Sprite(sprites[4]), gc, playas));
 				break;
 			default:
 				break;
