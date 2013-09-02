@@ -14,18 +14,21 @@ public class Bullet implements SpaceObject {
 	public static final int UP = 0;
 	public static final int DOWN = 1;
 	
-	private Sprite sprite;
-	private Vector2 position;
-	private int direction;
-	private int speed;
+	protected Sprite sprite;
+	protected Vector2 position;
+	protected int direction;
+	protected float speed;
 	
-	public Bullet(float X, float Y, Sprite sprite, int direction, int speed) {
+	protected boolean delete;
+	
+	public Bullet(float X, float Y, Sprite sprite, int direction, float speed) {
 		
-		position = new Vector2(X - sprite.getWidth()/2.0f, Y - sprite.getHeight()/2.0f);
+		this.position = new Vector2(X - sprite.getWidth()/2.0f, Y - sprite.getHeight()/2.0f);
 		this.sprite = sprite;
 		this.sprite.setPosition(position.x, position.y);
 		this.direction = direction;
 		this.speed = speed;
+		this.delete = false;
 		
 	}
 
@@ -49,17 +52,26 @@ public class Bullet implements SpaceObject {
 		}
 		
 		sprite.setPosition(position.x, position.y);
+		if(position.y < 0){
+			delete = true;
+		}
 
 	}
 
 	@Override
 	public Vector2 getPosition() {
-		return new Vector2(position.x + sprite.getWidth()/2.0f, position.y - sprite.getHeight()/2.0f);
+		return new Vector2(position.x + sprite.getWidth()/2.0f, position.y + sprite.getHeight()/2.0f);
 	}
 
 	@Override
   public Vector2 getRealPosition() {
 	  return position;
+  }
+
+	@Override
+  public boolean deleteThis() {
+	  // TODO Auto-generated method stub
+	  return delete;
   }
 
 }

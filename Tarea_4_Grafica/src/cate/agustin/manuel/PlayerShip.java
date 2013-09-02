@@ -57,7 +57,7 @@ public class PlayerShip implements SpaceObject{
 		for(Bullet bullet: bulletList){
 			bullet.updatePosition(delta);
 			
-			if(bullet.getPosition().y < 0){
+			if(bullet.deleteThis()){
 				removeList.add(bullet);
 			}
 		}
@@ -149,12 +149,17 @@ public class PlayerShip implements SpaceObject{
 
 	@Override
 	public Vector2 getPosition(){
-		return new Vector2(position.x + sprite.getWidth()/2.0f, position.y - sprite.getHeight()/2.0f);
+		return new Vector2(position.x + sprite.getWidth()/2.0f, position.y + sprite.getHeight()/2.0f);
 	}
 
 	@Override
   public Vector2 getRealPosition() {
 	  return position;
+  }
+
+	@Override
+  public boolean deleteThis() {
+	  return false;
   }
 
 }

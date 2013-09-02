@@ -1,5 +1,8 @@
 package cate.agustin.manuel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mini2Dx.core.game.GameContainer;
 import org.mini2Dx.core.graphics.Graphics;
 import org.mini2Dx.core.screen.GameScreen;
@@ -13,7 +16,7 @@ public class InGame implements GameScreen{
 
 	public static int ID = 0; //Hay que cambiarlo despues
 	
-	private PlayerShip pOne;
+	private List<PlayerShip> playas;
 	private AssetManager manager;
 	private EnemyManager eManager;
 	
@@ -31,21 +34,28 @@ public class InGame implements GameScreen{
 		manager.load("data/bullet1.png", Texture.class);
 		manager.finishLoading();
 		
-		eManager = new EnemyManager(gc, manager);
+		playas = new ArrayList<PlayerShip>();
+		
 		
 		Texture shipTex = manager.get("data/player1.png", Texture.class);
 		Texture bulletTex = manager.get("data/bullet1.png", Texture.class);
-		pOne = new PlayerShip(1, new Sprite(shipTex), gc.getWidth()/2.0f, 
-				gc.getHeight()/2.0f, gc, new Sprite(bulletTex));
+		playas.add(new PlayerShip(1, new Sprite(shipTex), gc.getWidth()/2.0f, 
+				gc.getHeight()/2.0f, gc, new Sprite(bulletTex)));
 		
-		eManager.directSpawn(400, -10, 1);
+		eManager = new EnemyManager(gc, manager, playas);
+//		eManager.directSpawn(400, -10, 1);
+//		eManager.directSpawn(200, -10, 2);
+//		eManager.directSpawn(600, -10, 3);
+		eManager.directSpawn(600, -10, 4);
 		
   }
 
 	@Override
   public void render(GameContainer gc, Graphics g) {
 		
-		pOne.renderObject(g);
+		for(PlayerShip playa: playas){
+			playa.renderObject(g);
+		}
 		eManager.renderEnemies(g);
 		
 		g.fillCircle(gc.getWidth()/2.0f, gc.getHeight()/2.0f, 2);
@@ -55,7 +65,9 @@ public class InGame implements GameScreen{
 	@Override
   public void update(GameContainer gc, ScreenManager sm, float delta) {
 		
-		pOne.updatePosition(delta);
+		for(PlayerShip playa: playas){
+			playa.updatePosition(delta);
+		}
 		eManager.updateEnemies(delta);
 		
   }

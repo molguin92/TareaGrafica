@@ -20,10 +20,12 @@ public class EnemyManager {
 	private AssetManager am;
 	private List<SpaceObject> eList;
 	private List<SpaceObject> removeList;
+	private List<PlayerShip> playas;
 
-	public EnemyManager(GameContainer gc, AssetManager am) {
+	public EnemyManager(GameContainer gc, AssetManager am, List<PlayerShip> playas) {
 		this.gc = gc;
 		this.am = am;
+		this.playas = playas;
 		
 		eList = new ArrayList<SpaceObject>();
 		removeList = new ArrayList<SpaceObject>();
@@ -32,11 +34,22 @@ public class EnemyManager {
 	public void randomSpawn(){}
 	
 	public void directSpawn(float X, float Y, int type){
+		
+		Texture tex = am.get("data/player2.png", Texture.class);
+		Texture bullet = am.get("data/bullet1.png", Texture.class);
+		
 		switch (type) {
 			case 1:
-				Texture tex = am.get("data/player2.png", Texture.class);
-				Texture bullet = am.get("data/bullet1.png", Texture.class);
-				eList.add(new Enemy1(new Sprite(tex), X, Y, new Sprite(bullet), gc));
+				eList.add(new Enemy_Simple(new Sprite(tex), X, Y, new Sprite(bullet), gc));
+				break;
+			case 2:
+				eList.add(new Enemy_Sin(new Sprite(tex), X, Y, new Sprite(bullet), gc));
+				break;
+			case 3:
+				eList.add(new Enemy_Kamikaze(new Sprite(tex), X, Y, new Sprite(bullet), gc, playas));
+				break;
+			case 4:
+				eList.add(new Enemy_Turret(new Sprite(tex), X, Y, new Sprite(bullet), gc, playas));
 				break;
 			default:
 				break;

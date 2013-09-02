@@ -9,23 +9,24 @@ import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
-public class Enemy1 implements SpaceObject{
+public class Enemy_Simple implements SpaceObject{
+
+	protected Sprite sprite;
+	protected Sprite bSprite;
+	protected Vector2 position;
+	protected GameContainer gc;
+	protected List<Bullet> bList;
+	protected List<Bullet> removeList;
+	protected float fCounter;
+	protected boolean deleteMe;
+	protected float speed;
 	
-	private Sprite sprite;
-	private Sprite bSprite;
-	private Vector2 position;
-	private GameContainer gc;
-	private List<Bullet> bList;
-	private List<Bullet> removeList;
-	private float fCounter;
-	private float iX;
-	private boolean deleteMe;
-	
-	public Enemy1(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc){
+	public Enemy_Simple(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc){
+		
+		this.speed = 100;
 		
 		this.sprite = sprite;
 		this.bSprite = bSprite;
-		this.iX = X;
 		this.gc = gc;
 		
 		position = new Vector2(X - sprite.getWidth()/2.0f, Y - sprite.getHeight()/2.0f);
@@ -54,7 +55,7 @@ public class Enemy1 implements SpaceObject{
 		for(Bullet bullet: bList){
 			bullet.updatePosition(delta);
 			
-			if(bullet.getPosition().y > gc.getHeight()){
+			if(bullet.deleteThis()){
 				removeList.add(bullet);
 			}
 		}
@@ -65,8 +66,7 @@ public class Enemy1 implements SpaceObject{
 		
 		removeList.clear();
 		
-		position.y += delta*50;
-		position.x = iX + (float) Math.sin(position.y/100.0f) * 300;
+		position.y += delta*speed;
 		
 		sprite.setPosition(position.x, position.y);
 		
@@ -78,7 +78,7 @@ public class Enemy1 implements SpaceObject{
 		
   }
 	
-	private void fire(float delta){
+	protected void fire(float delta){
 		
 		if(fCounter > 0.7){
 			Sprite bullet = new Sprite(bSprite);
@@ -104,5 +104,5 @@ public class Enemy1 implements SpaceObject{
   public boolean deleteThis() {
 	  return deleteMe;
   }
-	
+
 }
