@@ -29,17 +29,38 @@ public class InGame implements GameScreen{
   public void initialise(GameContainer gc) {		
 		
 		manager = new AssetManager();
-		manager.load("data/player1.png", Texture.class);
 		manager.load("data/player2.png", Texture.class);
 		manager.load("data/bullet1.png", Texture.class);
+		manager.load("data/player1/player1.1.png", Texture.class);
+		manager.load("data/player1/player1.2.png", Texture.class);
+		manager.load("data/player1/player1.3.png", Texture.class);
+		manager.load("data/player1/player1.4.png", Texture.class);
+		manager.load("data/player1/player1.l1.png", Texture.class);
+		manager.load("data/player1/player1.l2.png", Texture.class);
+		manager.load("data/player1/player1.r1.png", Texture.class);
+		manager.load("data/player1/player1.r2.png", Texture.class);
 		manager.finishLoading();
 		
 		playas = new ArrayList<PlayerShip>();
 		
 		
-		Texture shipTex = manager.get("data/player1.png", Texture.class);
+		Texture[] shipTex = {manager.get("data/player1/player1.1.png", Texture.class),
+		manager.get("data/player1/player1.2.png", Texture.class),
+		manager.get("data/player1/player1.3.png", Texture.class),
+		manager.get("data/player1/player1.4.png", Texture.class),
+		manager.get("data/player1/player1.l1.png", Texture.class),
+		manager.get("data/player1/player1.l2.png", Texture.class),
+		manager.get("data/player1/player1.r1.png", Texture.class),
+		manager.get("data/player1/player1.r2.png", Texture.class)				
+		};
+		Sprite[] shipSprites = new Sprite[shipTex.length];
+		
+		for(int i = 0; i < shipSprites.length; i++){
+			shipSprites[i] = new Sprite(shipTex[i]);
+		}
+		
 		Texture bulletTex = manager.get("data/bullet1.png", Texture.class);
-		playas.add(new PlayerShip(1, new Sprite(shipTex), gc.getWidth()/2.0f, 
+		playas.add(new PlayerShip(1, shipSprites, gc.getWidth()/2.0f, 
 				gc.getHeight()/2.0f, gc, new Sprite(bulletTex)));
 		
 		eManager = new EnemyManager(gc, manager, playas);

@@ -26,24 +26,32 @@ public class PlayerShip implements SpaceObject{
 	public static final int RIGHT = 3;
 
 	private Vector2 position; //Posicion
-	private Sprite sprite; //Sprite de la nave
+	private Sprite[] sprite; //Sprite de la nave
 	private Sprite bSprite; //Sprite de sus balas
 	private int playerNr; //Numero del jugador
 	private GameContainer gc; 
 	private List<Bullet> bulletList; //Lista de balas
 	private List<Bullet> removeList; //Lista de balas a ser borradas.
 	private float fCounter; //Contador para disparar.
+	private float renderCounter;
+	private float width;
+	private float height;
+	private int spriteNr;
 
-	public PlayerShip(int playerNr, Sprite sprite, float X, float Y, GameContainer gc, Sprite bSprite) {
+	public PlayerShip(int playerNr, Sprite[] sprite, float X, float Y, GameContainer gc, Sprite bSprite) {
 
 		this.playerNr = playerNr;
 		this.sprite = sprite;
 		this.gc = gc;
 		this.bSprite = bSprite;
+		this.width = sprite[1].getWidth();
+		this.height = sprite[1].getHeight();
 
-		position = new Vector2(X - sprite.getWidth()/2.0f, Y - sprite.getHeight()/2.0f); 
-		this.sprite.setPosition(position.x, position.y);
-		this.sprite.flip(false, true);
+		position = new Vector2(X - width/2.0f, Y - height/2.0f);
+		for(Sprite sub_sprite: sprite){
+			sub_sprite.setPosition(position.x, position.y);
+			sub_sprite.flip(false, true);
+		}
 
 		fCounter = 1;
 		bulletList = new ArrayList<Bullet>();
@@ -67,6 +75,22 @@ public class PlayerShip implements SpaceObject{
 		}
 		
 		removeList.clear();
+		
+		if(renderCounter < 0.08){
+			spriteNr = 0;
+			renderCounter += delta;
+		} else if(renderCounter < 0.16){
+			spriteNr = 1;
+			renderCounter += delta;
+		} else if(renderCounter < 0.24){
+			spriteNr = 2;
+			renderCounter += delta;
+		} else if(renderCounter < 0.32){
+			spriteNr = 3;
+			renderCounter = 0;
+		} else {
+			renderCounter += delta;
+		}
 
 		if(Gdx.input.isKeyPressed(Keys.UP)){
 			moveShip(UP, delta);
@@ -105,12 +129,12 @@ public class PlayerShip implements SpaceObject{
 				break;
 		}
 
-		if(position.x + sprite.getWidth() > gc.getWidth()){
-			position.x = gc.getWidth() - sprite.getWidth();
+		if(position.x + width > gc.getWidth()){
+			position.x = gc.getWidth() - width;
 		}
 
-		if(position.y + sprite.getHeight() > gc.getHeight()){
-			position.y = gc.getHeight() - sprite.getHeight();
+		if(position.y + height > gc.getHeight()){
+			position.y = gc.getHeight() - height;
 		}
 
 		if(position.x < 0){
@@ -121,7 +145,9 @@ public class PlayerShip implements SpaceObject{
 			position.y = 0;
 		}
 
-		sprite.setPosition(position.x, position.y);
+		for(Sprite sub_sprite: sprite){
+			sub_sprite.setPosition(position.x, position.y);
+		}
 
 	}
 
@@ -129,10 +155,10 @@ public class PlayerShip implements SpaceObject{
 
 		if(fCounter > 0.08){
 			Sprite bullet = new Sprite(bSprite);
-			bulletList.add(new Bullet(position.x + sprite.getWidth()/2.0f, position.y, bullet, Bullet.UP, 1500));
+			bulletList.add(new Bullet(position.x + width/2.0f, position.y, bullet, Bullet.UP, 1500));
 			fCounter = 0;
 		} else {
-			fCounter = fCounter + delta;
+			fCounter += delta;
 		}
 
 	}
@@ -140,16 +166,17 @@ public class PlayerShip implements SpaceObject{
 	@Override
 	public void renderObject(Graphics g){
 
-		g.drawSprite(sprite);
-
+		g.drawSprite(sprite[spriteNr]);
+		
 		for(Bullet bullet: bulletList){
 			bullet.renderObject(g);
 		}
+		
 	}
 
 	@Override
 	public Vector2 getPosition(){
-		return new Vector2(position.x + sprite.getWidth()/2.0f, position.y + sprite.getHeight()/2.0f);
+		return new Vector2(position.x + width/2.0f, position.y + height/2.0f);
 	}
 
 	@Override
