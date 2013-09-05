@@ -6,8 +6,6 @@ import java.util.List;
 import org.mini2Dx.core.game.GameContainer;
 import org.mini2Dx.core.graphics.Graphics;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class EnemyManager {
@@ -48,6 +46,8 @@ public class EnemyManager {
 			case 4:
 				eList.add(new Enemy_Turret(new Sprite(sprites[0]), X, Y, new Sprite(sprites[4]), gc, playas));
 				break;
+			case 5:
+				eList.add(new Enemy_Boss(new Sprite(sprites[3]), X, Y, new Sprite(sprites[4]), gc));
 			default:
 				break;
 		}

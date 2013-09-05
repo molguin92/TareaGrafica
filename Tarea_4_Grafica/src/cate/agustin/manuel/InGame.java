@@ -43,6 +43,7 @@ public class InGame implements GameScreen{
 		manager.load("data/enemigos/kami.png", Texture.class);
 		manager.load("data/enemigos/recto.png", Texture.class);
 		manager.load("data/enemigos/seno.png", Texture.class);
+		manager.load("data/fondo2.jpg", Texture.class);
 		manager.finishLoading();
 
 		playas = new ArrayList<PlayerShip>();
@@ -80,16 +81,20 @@ public class InGame implements GameScreen{
 				gc.getHeight()/2.0f, gc, new Sprite(bulletTex)));
 
 		eManager = new EnemyManager(gc, enemySprites, playas);
-		eManager.directSpawn(400, -10, 1);
-		eManager.directSpawn(200, -10, 2);
-		eManager.directSpawn(600, -10, 3);
-		eManager.directSpawn(600, -10, 4);
+		//eManager.directSpawn(400, -10, 1);
+		//eManager.directSpawn(200, -10, 2);
+		//eManager.directSpawn(600, -10, 3);
+		//eManager.directSpawn(600, -10, 4);
+		eManager.directSpawn(600, -10, 5);
 
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-
+		
+		Sprite background = new Sprite(manager.get("data/fondo2.jpg", Texture.class));
+		g.drawSprite(background);
+		
 		for(PlayerShip playa: playas){
 			playa.renderObject(g);
 		}

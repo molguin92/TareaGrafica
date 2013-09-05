@@ -20,6 +20,8 @@ public class Enemy_Simple implements SpaceObject{
 	protected float fCounter;
 	protected boolean deleteMe;
 	protected float speed;
+	protected float width;
+	protected float height;
 	
 	public Enemy_Simple(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc){
 		
@@ -28,8 +30,10 @@ public class Enemy_Simple implements SpaceObject{
 		this.sprite = sprite;
 		this.bSprite = bSprite;
 		this.gc = gc;
+		this.width = sprite.getWidth();
+		this.height = sprite.getHeight();
 		
-		position = new Vector2(X - sprite.getWidth()/2.0f, Y - sprite.getHeight()/2.0f);
+		position = new Vector2(X - width/2.0f, Y - height/2.0f);
 		bList = new ArrayList<Bullet>();
 		removeList = new ArrayList<Bullet>();
 		fCounter = 1;
@@ -83,7 +87,7 @@ public class Enemy_Simple implements SpaceObject{
 		
 		if(fCounter > 0.7){
 			Sprite bullet = new Sprite(bSprite);
-			bList.add(new Bullet(position.x + sprite.getWidth()/2.0f, position.y + sprite.getHeight(), bullet, Bullet.DOWN, 700));
+			bList.add(new Bullet(position.x + width/2.0f, position.y + height, bullet, Bullet.DOWN, 700));
 			fCounter = 0;
 		} else {
 			fCounter = fCounter + delta;
@@ -93,7 +97,7 @@ public class Enemy_Simple implements SpaceObject{
 
 	@Override
   public Vector2 getPosition() {
-	  return new Vector2(position.x + sprite.getWidth()/2.0f, position.y - sprite.getHeight()/2.0f);
+	  return new Vector2(position.x + width/2.0f, position.y - height/2.0f);
   }
 	
 	@Override

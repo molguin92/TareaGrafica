@@ -35,9 +35,9 @@ public class Enemy_Kamikaze extends Enemy_Simple {
 			position.x -= speed*delta;
 		}
 		
-		if(playa_pos.y > position.y - sprite.getHeight()/2.0f){
+		if(playa_pos.y > position.y + sprite.getHeight()/2.0f){
 			position.y += speed*delta;
-		} else if(playa_pos.y < position.y - sprite.getHeight()/2.0f){
+		} else if(playa_pos.y < position.y + sprite.getHeight()/2.0f){
 			position.y -= speed*delta;
 		}
 
