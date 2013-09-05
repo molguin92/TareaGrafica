@@ -46,6 +46,7 @@ public class PlayerShip implements SpaceObject{
 		this.sprite = sprite;
 		this.gc = gc;
 		this.bSprite = bSprite;
+		this.bSprite.flip(false, true);
 		this.width = sprite[1].getWidth();
 		this.height = sprite[1].getHeight();
 

@@ -30,7 +30,8 @@ public class InGame implements GameScreen{
 
 		manager = new AssetManager();
 		manager.load("data/player2.png", Texture.class);
-		manager.load("data/bullet1.png", Texture.class);
+		manager.load("data/bullets/bullet1.png", Texture.class);
+		manager.load("data/bullets/blast.png", Texture.class);
 		manager.load("data/player1/player1.1.png", Texture.class);
 		manager.load("data/player1/player1.2.png", Texture.class);
 		manager.load("data/player1/player1.3.png", Texture.class);
@@ -39,7 +40,7 @@ public class InGame implements GameScreen{
 		manager.load("data/player1/player1.l2.png", Texture.class);
 		manager.load("data/player1/player1.r1.png", Texture.class);
 		manager.load("data/player1/player1.r2.png", Texture.class);
-		manager.load("data/enemigos/boss.png", Texture.class);
+		manager.load("data/enemigos/boss2.png", Texture.class);
 		manager.load("data/enemigos/kami.png", Texture.class);
 		manager.load("data/enemigos/recto.png", Texture.class);
 		manager.load("data/enemigos/seno.png", Texture.class);
@@ -62,11 +63,14 @@ public class InGame implements GameScreen{
 		Texture[] enemyTex = {manager.get("data/enemigos/recto.png", Texture.class),
 				manager.get("data/enemigos/seno.png", Texture.class),
 				manager.get("data/enemigos/kami.png", Texture.class),
-				manager.get("data/enemigos/boss.png", Texture.class),
-				manager.get("data/bullet1.png", Texture.class)};
+				manager.get("data/enemigos/boss2.png", Texture.class)};
+		
+		Texture[] projTex = {manager.get("data/bullets/bullet1.png", Texture.class),
+				manager.get("data/bullets/blast.png", Texture.class)};
 		
 		Sprite[] shipSprites = new Sprite[shipTex.length];
 		Sprite[] enemySprites = new Sprite[enemyTex.length];
+		Sprite[] projSprites = new Sprite[projTex.length];
 
 		for(int i = 0; i < shipSprites.length; i++){
 			shipSprites[i] = new Sprite(shipTex[i]);
@@ -75,12 +79,16 @@ public class InGame implements GameScreen{
 		for(int i = 0; i < enemySprites.length; i++){
 			enemySprites[i] = new Sprite(enemyTex[i]);
 		}
+		
+		for(int i = 0; i < projSprites.length; i++){
+			projSprites[i] = new Sprite(projTex[i]);
+		}
 
-		Texture bulletTex = manager.get("data/bullet1.png", Texture.class);
+		Texture bulletTex = manager.get("data/bullets/bullet1.png", Texture.class);
 		playas.add(new PlayerShip(1, shipSprites, gc.getWidth()/2.0f, 
 				gc.getHeight()/2.0f, gc, new Sprite(bulletTex)));
 
-		eManager = new EnemyManager(gc, enemySprites, playas);
+		eManager = new EnemyManager(gc, enemySprites, playas, projSprites);
 		//eManager.directSpawn(400, -10, 1);
 		//eManager.directSpawn(200, -10, 2);
 		//eManager.directSpawn(600, -10, 3);

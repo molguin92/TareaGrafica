@@ -19,10 +19,12 @@ public class EnemyManager {
 	private List<SpaceObject> eList;
 	private List<SpaceObject> removeList;
 	private List<PlayerShip> playas;
+	private Sprite[] projSprites;
 
-	public EnemyManager(GameContainer gc, Sprite[] sprites, List<PlayerShip> playas) {
+	public EnemyManager(GameContainer gc, Sprite[] sprites, List<PlayerShip> playas, Sprite[] projectileSprites) {
 		this.gc = gc;
 		this.sprites = sprites;
+		this.projSprites = projectileSprites;
 		this.playas = playas;
 		
 		eList = new ArrayList<SpaceObject>();
@@ -35,19 +37,19 @@ public class EnemyManager {
 		
 		switch (type) {
 			case 1:
-				eList.add(new Enemy_Simple(new Sprite(sprites[0]), X, Y, new Sprite(sprites[4]), gc));
+				eList.add(new Enemy_Simple(new Sprite(sprites[0]), X, Y, new Sprite(projSprites[0]), gc));
 				break;
 			case 2:
-				eList.add(new Enemy_Sin(new Sprite(sprites[1]), X, Y, new Sprite(sprites[4]), gc));
+				eList.add(new Enemy_Sin(new Sprite(sprites[1]), X, Y, new Sprite(projSprites[0]), gc));
 				break;
 			case 3:
-				eList.add(new Enemy_Kamikaze(new Sprite(sprites[2]), X, Y, new Sprite(sprites[4]), gc, playas));
+				eList.add(new Enemy_Kamikaze(new Sprite(sprites[2]), X, Y, new Sprite(projSprites[0]), gc, playas));
 				break;
 			case 4:
-				eList.add(new Enemy_Turret(new Sprite(sprites[0]), X, Y, new Sprite(sprites[4]), gc, playas));
+				eList.add(new Enemy_Turret(new Sprite(sprites[0]), X, Y, new Sprite(projSprites[0]), gc, playas));
 				break;
 			case 5:
-				eList.add(new Enemy_Boss(new Sprite(sprites[3]), X, Y, new Sprite(sprites[4]), gc));
+				eList.add(new Enemy_Boss(new Sprite(sprites[3]), X, Y, new Sprite(projSprites[1]), gc));
 			default:
 				break;
 		}
