@@ -9,6 +9,7 @@ import org.mini2Dx.core.graphics.Graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -30,8 +31,8 @@ public class PlayerShip implements SpaceObject{
 	private Sprite bSprite; //Sprite de sus balas
 	private int playerNr; //Numero del jugador
 	private GameContainer gc; 
-	private List<Bullet> bulletList; //Lista de balas
-	private List<Bullet> removeList; //Lista de balas a ser borradas.
+	List<Bullet> bulletList; //Lista de balas
+	List<Bullet> removeList; //Lista de balas a ser borradas.
 	private float fCounter; //Contador para disparar.
 	private float renderCounter;
 	private float LCounter;
@@ -39,6 +40,7 @@ public class PlayerShip implements SpaceObject{
 	private float width;
 	private float height;
 	private int spriteNr;
+	protected Polygon poly;
 
 	public PlayerShip(int playerNr, Sprite[] sprite, float X, float Y, GameContainer gc, Sprite bSprite) {
 
@@ -49,12 +51,14 @@ public class PlayerShip implements SpaceObject{
 		this.bSprite.flip(false, true);
 		this.width = sprite[1].getWidth();
 		this.height = sprite[1].getHeight();
-
+		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
+		
 		position = new Vector2(X - width/2.0f, Y - height/2.0f);
 		for(Sprite sub_sprite: sprite){
 			sub_sprite.setPosition(position.x, position.y);
 			sub_sprite.flip(false, true);
 		}
+		poly.setPosition(position.x, position.y);
 
 		fCounter = 1;
 		renderCounter = 0;
@@ -174,7 +178,7 @@ public class PlayerShip implements SpaceObject{
 		}
 		
 		
-
+		
 		fire(delta);
 
 	}
@@ -211,7 +215,8 @@ public class PlayerShip implements SpaceObject{
 		if(position.y < 0){
 			position.y = 0;
 		}
-
+		
+		poly.setPosition(position.x, position.y);
 		for(Sprite sub_sprite: sprite){
 			sub_sprite.setPosition(position.x, position.y);
 		}

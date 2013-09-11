@@ -69,45 +69,46 @@ public class EnemyManager {
 		for(SpaceObject enemy: removeList){
 			eList.remove(enemy);
 		}
-		
+
 		removeList.clear();
 	}
-	
+
 	public void renderEnemies(Graphics g){
 		for(SpaceObject enemy: eList){
 			enemy.renderObject(g);
 		}
 	}
-//	public void checkCollisionsInEnemies(){
-//		Polygon poly1, poly2;
-//		for(PlayerShip playa: playas){
-//			for(Bullet bullet: playa.bulletList){
-//				for(Enemy_Simple malote: eList){
-//					poly1=malote.poly;
-//					poly2=bullet.poly;
-//					if(Intersector.overlapConvexPolygons(poly1, poly2)){
-//						//HAY UN CHOQUE
-//						// vida enemigo--
-//					}
-//
-//				}
-//			}
-//		}
-//	}
-//	public void checkCollisionsInPlayers(){
-//		for(Enemy_Simple malote: eList){
-//			for(Bullet bullet: malote.bulletList){
-//				for(PlayerShip playa: playas){
-//					poly1=playa.poly;
-//					poly2=bullet.poly;
-//					if(Intersector.overlapConvexPolygons(poly1, poly2)){
-//						//HAY UN CHOQUE
-//						// vida jugador--
-//					}
-//
-//				}
-//			}
-//		}
-//		
-//	}
+	public void checkCollisionsInEnemies(){
+		Polygon poly1, poly2;
+		for(PlayerShip playa: playas){
+			for(Bullet bullet: playa.bulletList){
+				for(Enemy_Simple malote: eList){
+					poly1=malote.poly;
+					poly2=bullet.poly;
+					if(Intersector.overlapConvexPolygons(poly1, poly2)){
+						System.out.println("choque a un enemigo");
+						// vida enemigo--
+					}
+
+				}
+			}
+		}
+	}
+	public void checkCollisionsInPlayers(){
+		Polygon poly1, poly2;
+		for(Enemy_Simple malote: eList){
+			for(Bullet bullet: malote.bList){
+				for(PlayerShip playa: playas){
+					poly1=playa.poly;
+					poly2=bullet.poly;
+					if(Intersector.overlapConvexPolygons(poly1, poly2)){
+						System.out.println("choque a un jugador");
+						// vida jugador--
+					}
+
+				}
+			}
+		}
+
+	}
 }

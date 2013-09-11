@@ -48,7 +48,7 @@ public class Enemy_Simple implements SpaceObject{
 		sprite.setPosition(position.x, position.y);
 		sprite.flip(false, true);
 		//
-		this.poly.setPosition(position.x, position.y);
+		poly.setPosition(position.x, position.y);
 		
 		deleteMe = false;
 		
@@ -87,7 +87,8 @@ public class Enemy_Simple implements SpaceObject{
 		if(position.y > gc.getHeight()){
 			deleteMe = true;
 		}
-	  
+		
+		poly.setPosition(position.x, position.y);
 		fire(delta);
 		
   }
