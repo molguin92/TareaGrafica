@@ -7,6 +7,8 @@ import org.mini2Dx.core.game.GameContainer;
 import org.mini2Dx.core.graphics.Graphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 
 public class EnemyManager {
 	
@@ -16,7 +18,7 @@ public class EnemyManager {
 	
 	private GameContainer gc;
 	private Sprite[] sprites;
-	private List<SpaceObject> eList;
+	private List<Enemy_Simple> eList;
 	private List<SpaceObject> removeList;
 	private List<PlayerShip> playas;
 	private Sprite[] projSprites;
@@ -27,7 +29,7 @@ public class EnemyManager {
 		this.projSprites = projectileSprites;
 		this.playas = playas;
 		
-		eList = new ArrayList<SpaceObject>();
+		eList = new ArrayList<Enemy_Simple>();
 		removeList = new ArrayList<SpaceObject>();
 	}
 	
@@ -76,4 +78,36 @@ public class EnemyManager {
 			enemy.renderObject(g);
 		}
 	}
+//	public void checkCollisionsInEnemies(){
+//		Polygon poly1, poly2;
+//		for(PlayerShip playa: playas){
+//			for(Bullet bullet: playa.bulletList){
+//				for(Enemy_Simple malote: eList){
+//					poly1=malote.poly;
+//					poly2=bullet.poly;
+//					if(Intersector.overlapConvexPolygons(poly1, poly2)){
+//						//HAY UN CHOQUE
+//						// vida enemigo--
+//					}
+//
+//				}
+//			}
+//		}
+//	}
+//	public void checkCollisionsInPlayers(){
+//		for(Enemy_Simple malote: eList){
+//			for(Bullet bullet: malote.bulletList){
+//				for(PlayerShip playa: playas){
+//					poly1=playa.poly;
+//					poly2=bullet.poly;
+//					if(Intersector.overlapConvexPolygons(poly1, poly2)){
+//						//HAY UN CHOQUE
+//						// vida jugador--
+//					}
+//
+//				}
+//			}
+//		}
+//		
+//	}
 }
