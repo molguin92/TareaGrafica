@@ -8,6 +8,7 @@ import org.mini2Dx.core.graphics.Graphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Polygon;
 
 public class Enemy_Simple implements SpaceObject{
 
@@ -22,6 +23,9 @@ public class Enemy_Simple implements SpaceObject{
 	protected float speed;
 	protected float width;
 	protected float height;
+	//
+	protected Polygon poly;
+
 	
 	public Enemy_Simple(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc){
 		
@@ -32,7 +36,10 @@ public class Enemy_Simple implements SpaceObject{
 		this.gc = gc;
 		this.width = sprite.getWidth();
 		this.height = sprite.getHeight();
+		//
+		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
 		
+		 
 		position = new Vector2(X - width/2.0f, Y - height/2.0f);
 		bList = new ArrayList<Bullet>();
 		removeList = new ArrayList<Bullet>();
@@ -40,6 +47,8 @@ public class Enemy_Simple implements SpaceObject{
 		
 		sprite.setPosition(position.x, position.y);
 		sprite.flip(false, true);
+		//
+		this.poly.setPosition(position.x, position.y);
 		
 		deleteMe = false;
 		
