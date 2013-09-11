@@ -98,40 +98,82 @@ public class PlayerShip implements SpaceObject{
 			renderCounter += delta;
 		}
 
-		if(Gdx.input.isKeyPressed(Keys.UP)){
-			moveShip(UP, delta);
-			spriteNr = 2;
-			LCounter = 0;
-			RCounter = 0;
-		}
+		switch (playerNr) {
+			case 1:
+				if(Gdx.input.isKeyPressed(Keys.UP)){
+					moveShip(UP, delta);
+					spriteNr = 2;
+					LCounter = 0;
+					RCounter = 0;
+				}
 
-		if(Gdx.input.isKeyPressed(Keys.DOWN)){
-			moveShip(DOWN, delta);
-			LCounter = 0;
-			RCounter = 0;
-		}
+				if(Gdx.input.isKeyPressed(Keys.DOWN)){
+					moveShip(DOWN, delta);
+					LCounter = 0;
+					RCounter = 0;
+				}
 
-		if(Gdx.input.isKeyPressed(Keys.LEFT) && !Gdx.input.isKeyPressed(Keys.RIGHT)){
-			moveShip(LEFT, delta);
-			RCounter = 0;
-			if(LCounter < 0.2){
-				spriteNr = 4;
-				LCounter += delta;
-			} else {
-				spriteNr = 5;
-			}
-		}
+				if(Gdx.input.isKeyPressed(Keys.LEFT) && !Gdx.input.isKeyPressed(Keys.RIGHT)){
+					moveShip(LEFT, delta);
+					RCounter = 0;
+					if(LCounter < 0.2){
+						spriteNr = 4;
+						LCounter += delta;
+					} else {
+						spriteNr = 5;
+					}
+				}
 
-		if(Gdx.input.isKeyPressed(Keys.RIGHT) && !Gdx.input.isKeyPressed(Keys.LEFT)){
-			moveShip(RIGHT, delta);
-			LCounter = 0;
-			if(RCounter < 0.2){
-				spriteNr = 6;
-				RCounter += delta;
-			} else {
-				spriteNr = 7;
-			}
+				if(Gdx.input.isKeyPressed(Keys.RIGHT) && !Gdx.input.isKeyPressed(Keys.LEFT)){
+					moveShip(RIGHT, delta);
+					LCounter = 0;
+					if(RCounter < 0.2){
+						spriteNr = 6;
+						RCounter += delta;
+					} else {
+						spriteNr = 7;
+					}
+				}
+				break;
+			case 2:
+				if(Gdx.input.isKeyPressed(Keys.W)){
+					moveShip(UP, delta);
+					spriteNr = 2;
+					LCounter = 0;
+					RCounter = 0;
+				}
+
+				if(Gdx.input.isKeyPressed(Keys.S)){
+					moveShip(DOWN, delta);
+					LCounter = 0;
+					RCounter = 0;
+				}
+
+				if(Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.D)){
+					moveShip(LEFT, delta);
+					RCounter = 0;
+					if(LCounter < 0.2){
+						spriteNr = 4;
+						LCounter += delta;
+					} else {
+						spriteNr = 5;
+					}
+				}
+
+				if(Gdx.input.isKeyPressed(Keys.D) && !Gdx.input.isKeyPressed(Keys.A)){
+					moveShip(RIGHT, delta);
+					LCounter = 0;
+					if(RCounter < 0.2){
+						spriteNr = 6;
+						RCounter += delta;
+					} else {
+						spriteNr = 7;
+					}
+				}
+				break;
 		}
+		
+		
 
 		fire(delta);
 

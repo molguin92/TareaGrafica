@@ -51,7 +51,7 @@ public class EnemyManager {
 				eList.add(new Enemy_Turret(new Sprite(sprites[0]), X, Y, new Sprite(projSprites[0]), gc, playas));
 				break;
 			case 5:
-				eList.add(new Enemy_Boss(new Sprite(sprites[3]), X, Y, new Sprite(projSprites[1]), gc));
+				eList.add(new Enemy_Boss(new Sprite(sprites[3]), X, Y, new Sprite(projSprites[0]), new Sprite(projSprites[1]), gc));
 			default:
 				break;
 		}
