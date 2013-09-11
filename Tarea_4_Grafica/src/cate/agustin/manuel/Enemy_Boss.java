@@ -1,22 +1,30 @@
 package cate.agustin.manuel;
 
+import java.util.List;
+
 import org.mini2Dx.core.game.GameContainer;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
 public class Enemy_Boss extends Enemy_Simple {
 
 	private int xMovementMod;
 	protected Sprite blastSprite;
 	protected float bCounter;
+	protected List<PlayerShip>	playas;
+	protected Vector2 target_pos;
 
 	public Enemy_Boss(Sprite sprite, float X, float Y, Sprite bSprite,
-			Sprite blastSprite, GameContainer gc) {
+			Sprite blastSprite, GameContainer gc, List<PlayerShip> playas) {
 		super(sprite, X, Y, bSprite, gc);
-
+		
 		xMovementMod = 1;
-		this.blastSprite = blastSprite;
 		bCounter = 0;
+		target_pos = null;
+		
+		this.playas = playas;
+		this.blastSprite = blastSprite;
 	}
 
 	@Override
@@ -56,6 +64,12 @@ public class Enemy_Boss extends Enemy_Simple {
 	@Override
 	protected void fire(float delta){
 		
+		for(PlayerShip playa: playas){
+			if(target_pos == null || position.dst(playa.getPosition()) < position.dst(target_pos)){
+				target_pos = playa.getPosition();
+			}			
+		}
+		
 		if(fCounter > 0.3){
 			Sprite bulletL = new Sprite(bSprite);
 			Sprite bulletR = new Sprite(bSprite);
@@ -65,15 +79,16 @@ public class Enemy_Boss extends Enemy_Simple {
 		} else {
 			fCounter = fCounter + delta;
 		}
-		
-		
+
 		if(bCounter > 0.7){
 			Sprite bullet = new Sprite(blastSprite);
-			bList.add(new Bullet(position.x + width/2.0f, position.y + height/2.0f, bullet, Bullet.DOWN, 700));
+			bList.add(new DirectionalBullet(position.x + width/2.0f, position.y + height/2.0f, bullet, target_pos, 700, gc));
 			bCounter = 0;
 		} else {
 			bCounter = bCounter + delta;
 		}
+		
+		target_pos = null;
 		
 	}
 
