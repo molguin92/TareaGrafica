@@ -25,11 +25,13 @@ public class Enemy_Simple implements SpaceObject{
 	protected float height;
 	protected Polygon poly;
 	public int integrity;
+	public float scale;
 	
 	public Enemy_Simple(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc, List<Bullet> bList){
 		
 		this.speed = 100;
 		this.integrity = 6;
+		this.scale = 1;
 		this.sprite = sprite;
 		this.bSprite = bSprite;
 		this.gc = gc;
@@ -90,7 +92,7 @@ public class Enemy_Simple implements SpaceObject{
 
 	@Override
   public Vector2 getPosition() {
-	  return new Vector2(position.x + width/2.0f, position.y - height/2.0f);
+	  return new Vector2(position.x + width/2.0f, position.y + height/2.0f);
   }
 	
 	@Override

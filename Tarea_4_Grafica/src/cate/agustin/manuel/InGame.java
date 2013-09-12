@@ -44,11 +44,13 @@ public class InGame implements GameScreen{
 		manager.load("data/enemigos/kami.png", Texture.class);
 		manager.load("data/enemigos/recto.png", Texture.class);
 		manager.load("data/enemigos/seno.png", Texture.class);
+		for(int i = 1; i <= 8; i++){
+			manager.load("data/explosion/exp"+i+".png", Texture.class);
+		}
 		manager.load("data/fondo2.jpg", Texture.class);
 		manager.finishLoading();
 
 		playas = new ArrayList<PlayerShip>();
-
 
 		Texture[] shipTex = {manager.get("data/player1/player1.1.png", Texture.class),
 				manager.get("data/player1/player1.2.png", Texture.class),
@@ -68,9 +70,16 @@ public class InGame implements GameScreen{
 		Texture[] projTex = {manager.get("data/bullets/bullet1.png", Texture.class),
 				manager.get("data/bullets/blast.png", Texture.class)};
 		
+		Texture[] expTex = new Texture[8];
+		for(int i = 1; i <= 8; i++){
+			expTex[i-1] = manager.get("data/explosion/exp"+i+".png", Texture.class);
+		}
+		
+		
 		Sprite[] shipSprites = new Sprite[shipTex.length];
 		Sprite[] enemySprites = new Sprite[enemyTex.length];
 		Sprite[] projSprites = new Sprite[projTex.length];
+		Sprite[] expSprites = new Sprite[expTex.length];
 
 		for(int i = 0; i < shipSprites.length; i++){
 			shipSprites[i] = new Sprite(shipTex[i]);
@@ -83,19 +92,16 @@ public class InGame implements GameScreen{
 		for(int i = 0; i < projSprites.length; i++){
 			projSprites[i] = new Sprite(projTex[i]);
 		}
+		
+		for(int i = 0; i < expSprites.length; i++){
+			expSprites[i] = new Sprite(expTex[i]);
+		}
 
 		Texture bulletTex = manager.get("data/bullets/bullet1.png", Texture.class);
 		playas.add(new PlayerShip(1, shipSprites, gc.getWidth()/2.0f, 
 				gc.getHeight()/2.0f, gc, new Sprite(bulletTex)));
 
-		eManager = new EnemyManager(gc, enemySprites, playas, projSprites);
-		//eManager.directSpawn(400, -10, 1);
-		//eManager.directSpawn(200, -10, 2);
-		//eManager.directSpawn(600, -10, 344);
-		//eManager.directSpawn(600, -10, 4);
-		//eManager.directSpawn(600, -10, 3);
-		//eManager.directSpawn(600, -10, 23);
-		//eManager.directSpawn(600, -10, 4);
+		eManager = new EnemyManager(gc, enemySprites, playas, projSprites, expSprites);
 		eManager.directSpawn(600, -10, 5);
 
 	}

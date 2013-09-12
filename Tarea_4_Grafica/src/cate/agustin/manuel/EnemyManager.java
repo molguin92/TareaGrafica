@@ -19,24 +19,31 @@ public class EnemyManager {
 	private GameContainer	     gc;
 	private Sprite[]	         sprites;
 	private List<Enemy_Simple>	eList;
-	private List<SpaceObject>	 removeList;
+	private List<Enemy_Simple>	 removeList;
 	private List<Bullet>	     bList;
 	private List<Bullet>	     removeBList;
 	private List<PlayerShip>	 playas;
+	private List<Explosion>		 explosions;
+	private List<Explosion>		 removeExp;
 	private Sprite[]	         projSprites;
+	private Sprite[]					 expSprites;
 
 	public EnemyManager(GameContainer gc, Sprite[] sprites,
-	    List<PlayerShip> playas, Sprite[] projectileSprites) {
+	    List<PlayerShip> playas, Sprite[] projectileSprites, Sprite[] expSprites) {
 		this.gc = gc;
 		this.sprites = sprites;
 		this.projSprites = projectileSprites;
+		this.expSprites = expSprites;
 		this.playas = playas;
 
 		bList = new ArrayList<Bullet>();
 		removeBList = new ArrayList<Bullet>();
 
 		eList = new ArrayList<Enemy_Simple>();
-		removeList = new ArrayList<SpaceObject>();
+		removeList = new ArrayList<Enemy_Simple>();
+		
+		explosions = new ArrayList<Explosion>();
+		removeExp = new ArrayList<Explosion>();
 	}
 
 	public void randomSpawn() {
@@ -70,7 +77,7 @@ public class EnemyManager {
 	}
 
 	public void updateEnemies(float delta) {
-		for (SpaceObject enemy : eList) {
+		for (Enemy_Simple enemy : eList) {
 			enemy.updatePosition(delta);
 
 			if (enemy.deleteThis()) {
@@ -78,7 +85,8 @@ public class EnemyManager {
 			}
 		}
 
-		for (SpaceObject enemy : removeList) {
+		for (Enemy_Simple enemy : removeList) {
+			explosions.add(new Explosion(enemy.getPosition().x, enemy.getPosition().y, expSprites.clone(), enemy.scale));
 			eList.remove(enemy);
 		}
 
@@ -97,6 +105,20 @@ public class EnemyManager {
 		}
 
 		removeBList.clear();
+		
+		for(Explosion explosion: explosions){
+			explosion.updatePosition(delta);
+			
+			if(explosion.deleteThis()){
+				removeExp.add(explosion);
+			}
+		}
+		
+		for(Explosion explosion: removeExp){
+			explosions.remove(explosion);
+		}
+		
+		removeExp.clear();
 
 	}
 
@@ -107,6 +129,10 @@ public class EnemyManager {
 
 		for (Bullet bullet : bList) {
 			bullet.renderObject(g);
+		}
+		
+		for(Explosion explosion: explosions) {
+			explosion.renderObject(g);
 		}
 	}
 
