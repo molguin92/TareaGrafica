@@ -5,6 +5,7 @@ import java.util.List;
 import org.mini2Dx.core.game.GameContainer;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 public class Enemy_Kamikaze extends Enemy_Simple {
@@ -20,6 +21,8 @@ public class Enemy_Kamikaze extends Enemy_Simple {
 		this.playa_pos = null;
 		this.speed = 300;
 		this.integrity = 12;
+		this.poly = new Polygon(new float[]{0,this.height/3.0f,this.width,this.height/3.0f,0, 2*this.height/3.0f, this.width, 2*this.height/3.0f});
+		this.poly.setPosition(position.x, position.y);
 	}
 
 	@Override

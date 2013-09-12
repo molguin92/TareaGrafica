@@ -1,14 +1,13 @@
 package cate.agustin.manuel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mini2Dx.core.game.GameContainer;
 import org.mini2Dx.core.graphics.Graphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 
 public class Enemy_Simple implements SpaceObject{
 
@@ -17,7 +16,6 @@ public class Enemy_Simple implements SpaceObject{
 	protected Vector2 position;
 	protected GameContainer gc;
 	protected List<Bullet> bList;
-	protected List<Bullet> removeList;
 	protected float fCounter;
 	protected boolean deleteMe;
 	protected float speed;
@@ -38,16 +36,14 @@ public class Enemy_Simple implements SpaceObject{
 		this.width = sprite.getWidth();
 		this.height = sprite.getHeight();
 		this.bList = bList;
-		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
+		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height/2.0f});
 		
 		 
 		position = new Vector2(X - width/2.0f, Y - height/2.0f);
-		bList = new ArrayList<Bullet>();
-		removeList = new ArrayList<Bullet>();
 		fCounter = 1;
 		
 		sprite.setPosition(position.x, position.y);
-		sprite.flip(false, true);
+		sprite.flip(false, false);
 		//
 		poly.setPosition(position.x, position.y);
 		
@@ -62,8 +58,6 @@ public class Enemy_Simple implements SpaceObject{
 
 	@Override
   public void updatePosition(float delta) {
-		
-		removeList.clear();
 		
 		position.y += delta*speed;
 		

@@ -5,6 +5,7 @@ import java.util.List;
 import org.mini2Dx.core.game.GameContainer;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 public class Enemy_Turret extends Enemy_Simple {
@@ -17,8 +18,10 @@ public class Enemy_Turret extends Enemy_Simple {
 		super(sprite, X, Y, bSprite, gc, bList);
 		this.playas = playas;
 		this.playa_pos = null;
-		this.speed = 100;
+		this.speed = 50;
 		this.integrity = 36;
+		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
+		this.poly.setPosition(position.x, position.y);
 	}
 
 	@Override

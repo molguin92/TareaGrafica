@@ -5,6 +5,7 @@ import java.util.List;
 import org.mini2Dx.core.game.GameContainer;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 
 public class Enemy_Sin extends Enemy_Simple{
 	
@@ -16,24 +17,12 @@ public class Enemy_Sin extends Enemy_Simple{
 	  speed = 50;
 	  iX = X;
 	  integrity = 36;
+	  this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
+	  this.poly.setPosition(position.x, position.y);
   }
 	
 	@Override
   public void updatePosition(float delta) {
-		
-		for(Bullet bullet: bList){
-			bullet.updatePosition(delta);
-			
-			if(bullet.getPosition().y > gc.getHeight()){
-				removeList.add(bullet);
-			}
-		}
-		
-		for(Bullet bullet: removeList){
-			bList.remove(bullet);
-		}
-		
-		removeList.clear();
 		
 		position.y += delta*speed;
 		position.x = iX + (float) Math.sin(position.y/100.0f) * 300;

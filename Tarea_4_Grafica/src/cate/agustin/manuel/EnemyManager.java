@@ -65,11 +65,11 @@ public class EnemyManager {
 				    projSprites[0]), gc, playas, bList));
 				break;
 			case 4:
-				eList.add(new Enemy_Turret(new Sprite(sprites[0]), X, Y, new Sprite(
+				eList.add(new Enemy_Turret(new Sprite(sprites[3]), X, Y, new Sprite(
 				    projSprites[0]), gc, playas, bList));
 				break;
 			case 5:
-				eList.add(new Enemy_Boss(new Sprite(sprites[3]), X, Y, new Sprite(
+				eList.add(new Enemy_Boss(new Sprite(sprites[4]), X, Y, new Sprite(
 				    projSprites[0]), new Sprite(projSprites[1]), gc, playas, bList));
 			default:
 				break;
@@ -77,6 +77,7 @@ public class EnemyManager {
 	}
 
 	public void updateEnemies(float delta) {
+		
 		for (Enemy_Simple enemy : eList) {
 			enemy.updatePosition(delta);
 
@@ -86,7 +87,11 @@ public class EnemyManager {
 		}
 
 		for (Enemy_Simple enemy : removeList) {
-			explosions.add(new Explosion(enemy.getPosition().x, enemy.getPosition().y, expSprites.clone(), enemy.scale));
+			Sprite[] spritesExp = new Sprite[expSprites.length];
+			for(int i = 0; i < expSprites.length; i++){
+				spritesExp[i] = new Sprite(expSprites[i]);
+			}
+			explosions.add(new Explosion(enemy.getPosition().x, enemy.getPosition().y, spritesExp, enemy.scale));
 			eList.remove(enemy);
 		}
 
@@ -119,6 +124,10 @@ public class EnemyManager {
 		}
 		
 		removeExp.clear();
+		
+		checkCollisionsInEnemies();
+		checkCollisionsInPlayers();
+		checkCollisionsEnemiesPlayers();
 
 	}
 
@@ -145,6 +154,7 @@ public class EnemyManager {
 					poly2 = bullet.poly;
 					if (Intersector.overlapConvexPolygons(poly1, poly2)) {
 						malote.decIntegrity(bullet.damage);
+						bullet.delete = true;
 						System.out.println(malote.integrity);
 					}
 
@@ -161,7 +171,7 @@ public class EnemyManager {
 				poly2 = bullet.poly;
 				if (Intersector.overlapConvexPolygons(poly1, poly2)) {
 					playa.decIntegrity(bullet.damage);
-					// System.out.println(playa.integrity);
+					bullet.delete = true;
 				}
 			}
 		}

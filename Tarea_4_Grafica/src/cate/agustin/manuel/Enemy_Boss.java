@@ -25,7 +25,7 @@ public class Enemy_Boss extends Enemy_Simple {
 		this.playas = playas;
 		this.blastSprite = blastSprite;
 		this.integrity = 600;
-		this.scale = 1.7f;
+		this.scale = 2.3f;
 	}
 
 	@Override

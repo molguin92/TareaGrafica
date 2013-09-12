@@ -44,6 +44,7 @@ public class InGame implements GameScreen{
 		manager.load("data/enemigos/kami.png", Texture.class);
 		manager.load("data/enemigos/recto.png", Texture.class);
 		manager.load("data/enemigos/seno.png", Texture.class);
+		manager.load("data/enemigos/turret.png", Texture.class);
 		for(int i = 1; i <= 8; i++){
 			manager.load("data/explosion/exp"+i+".png", Texture.class);
 		}
@@ -65,6 +66,7 @@ public class InGame implements GameScreen{
 		Texture[] enemyTex = {manager.get("data/enemigos/recto.png", Texture.class),
 				manager.get("data/enemigos/seno.png", Texture.class),
 				manager.get("data/enemigos/kami.png", Texture.class),
+				manager.get("data/enemigos/turret.png", Texture.class),
 				manager.get("data/enemigos/boss2.png", Texture.class)};
 		
 		Texture[] projTex = {manager.get("data/bullets/bullet1.png", Texture.class),
@@ -128,9 +130,6 @@ public class InGame implements GameScreen{
 			playa.updatePosition(delta);
 		}
 		eManager.updateEnemies(delta);
-		eManager.checkCollisionsInEnemies();
-		eManager.checkCollisionsInPlayers();
-		eManager.checkCollisionsEnemiesPlayers();
 
 	}
 
