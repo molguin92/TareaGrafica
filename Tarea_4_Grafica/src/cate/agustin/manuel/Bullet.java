@@ -3,6 +3,7 @@ package cate.agustin.manuel;
 import org.mini2Dx.core.graphics.Graphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 public class Bullet implements SpaceObject {
@@ -18,6 +19,9 @@ public class Bullet implements SpaceObject {
 	protected Vector2 position;
 	protected int direction;
 	protected float speed;
+	protected Polygon poly;
+	private float width;
+	private float height;
 	
 	protected boolean delete;
 	
@@ -26,9 +30,13 @@ public class Bullet implements SpaceObject {
 		this.position = new Vector2(X - sprite.getWidth()/2.0f, Y - sprite.getHeight()/2.0f);
 		this.sprite = sprite;
 		this.sprite.setPosition(position.x, position.y);
+		this.width = sprite.getWidth();
+		this.height = sprite.getHeight();
 		this.direction = direction;
 		this.speed = speed;
 		this.delete = false;
+		this.poly=new Polygon(new float[]{0,0,this.width,0,this.width,this.height,this.height,0});
+		poly.setPosition(position.x, position.y);
 		
 	}
 
@@ -50,7 +58,7 @@ public class Bullet implements SpaceObject {
 				position.y += delta*speed;
 				break;
 		}
-		
+		poly.setPosition(position.x, position.y);
 		sprite.setPosition(position.x, position.y);
 		if(position.y < 0){
 			delete = true;

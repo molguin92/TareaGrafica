@@ -119,6 +119,8 @@ public class InGame implements GameScreen{
 			playa.updatePosition(delta);
 		}
 		eManager.updateEnemies(delta);
+		eManager.checkCollisionsInEnemies();
+		eManager.checkCollisionsInPlayers();
 
 	}
 
