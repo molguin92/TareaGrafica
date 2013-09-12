@@ -18,6 +18,7 @@ public class Enemy_Turret extends Enemy_Simple {
 		this.playas = playas;
 		this.playa_pos = null;
 		this.speed = 100;
+		this.integrity = 36;
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class Enemy_Turret extends Enemy_Simple {
 
 		if(fCounter > 0.7){
 			Sprite bullet = new Sprite(bSprite);
-			bList.add(new DirectionalBullet(position.x + sprite.getWidth()/2.0f, position.y + sprite.getHeight()/2.0f, bullet, playa_pos, 300, gc));
+			bList.add(new DirectionalBullet(position.x + sprite.getWidth()/2.0f, position.y + sprite.getHeight()/2.0f, bullet, playa_pos, 300, gc, 1));
 			fCounter = 0;
 		} else {
 			fCounter = fCounter + delta;
@@ -45,7 +46,7 @@ public class Enemy_Turret extends Enemy_Simple {
 	public void updatePosition(float delta) {
 		super.updatePosition(delta);
 		
-		if(deleteMe && !bList.isEmpty()){
+		if(position.y > gc.getHeight() && !bList.isEmpty()){
 			deleteMe = false;
 		}
 		

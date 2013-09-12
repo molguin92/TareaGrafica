@@ -41,6 +41,7 @@ public class PlayerShip implements SpaceObject{
 	private float height;
 	private int spriteNr;
 	protected Polygon poly;
+	protected int integrity;
 
 	public PlayerShip(int playerNr, Sprite[] sprite, float X, float Y, GameContainer gc, Sprite bSprite) {
 
@@ -52,6 +53,8 @@ public class PlayerShip implements SpaceObject{
 		this.width = sprite[1].getWidth();
 		this.height = sprite[1].getHeight();
 		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
+		
+		this.integrity = 24;
 		
 		position = new Vector2(X - width/2.0f, Y - height/2.0f);
 		for(Sprite sub_sprite: sprite){
@@ -228,8 +231,8 @@ public class PlayerShip implements SpaceObject{
 		if(fCounter > 0.16){
 			Sprite bulletl = new Sprite(bSprite);
 			Sprite bulletr = new Sprite(bSprite);
-			bulletList.add(new Bullet(position.x + width/6.0f, position.y + height/2.0f, bulletl, Bullet.UP, 1500));
-			bulletList.add(new Bullet(position.x + 5 * width/6.0f, position.y + height/2.0f, bulletr, Bullet.UP, 1500));
+			bulletList.add(new Bullet(position.x + width/6.0f, position.y + height/2.0f, bulletl, Bullet.UP, 1500, 1));
+			bulletList.add(new Bullet(position.x + 5 * width/6.0f, position.y + height/2.0f, bulletr, Bullet.UP, 1500, 1));
 			fCounter = 0;
 		} else {
 			fCounter += delta;
@@ -261,6 +264,20 @@ public class PlayerShip implements SpaceObject{
 	@Override
   public boolean deleteThis() {
 	  return false;
+  }
+
+	@Override
+  public void decIntegrity(int damage) {
+	  
+		integrity -= damage;
+	  
+  }
+
+	@Override
+  public void incIntegrity(int life) {
+	  
+		integrity += life;
+	  
   }
 
 }

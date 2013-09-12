@@ -1,43 +1,36 @@
 package cate.agustin.manuel;
 
-import org.mini2Dx.core.graphics.Graphics;
+import org.mini2Dx.core.game.GameContainer;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
-public class HomingMissile implements SpaceObject{
+public class HomingMissile extends DirectionalBullet{
+	
+	protected PlayerShip target;
+	protected float lifeTime;
 
-	public HomingMissile(){
-		// TODO Auto-generated constructor stub
+	public HomingMissile(float X, float Y, Sprite sprite, PlayerShip target, float speed, GameContainer gc, int damage){
+		super(X, Y, sprite, target.getPosition(), speed, gc, damage);
+		
+		this.target = target;
+		this.lifeTime = 5;
+		
 	}
-
+	
 	@Override
-  public boolean deleteThis() {
-	  // TODO Auto-generated method stub
-	  return false;
-  }
+	public void updatePosition(float delta) {
+		
+		this.direction_v = target.getPosition().cpy().add(position.cpy().mul(-1)).nor();
+		
+		position.add(direction_v.cpy().mul(delta * speed));
+		sprite.setPosition(position.x, position.y);
+		poly.setPosition(position.x, position.y);
+		
+		if((lifeTime -= delta) <= 0){
+			delete = true;
+		}
 
-	@Override
-  public void renderObject(Graphics g) {
-	  // TODO Auto-generated method stub
-	  
-  }
-
-	@Override
-  public void updatePosition(float delta) {
-	  // TODO Auto-generated method stub
-	  
-  }
-
-	@Override
-  public Vector2 getPosition() {
-	  // TODO Auto-generated method stub
-	  return null;
-  }
-
-	@Override
-  public Vector2 getRealPosition() {
-	  // TODO Auto-generated method stub
-	  return null;
-  }
+	}
 
 }

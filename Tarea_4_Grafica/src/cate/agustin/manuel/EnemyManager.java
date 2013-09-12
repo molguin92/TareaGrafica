@@ -86,8 +86,8 @@ public class EnemyManager {
 					poly1=malote.poly;
 					poly2=bullet.poly;
 					if(Intersector.overlapConvexPolygons(poly1, poly2)){
-						System.out.println("choque a un enemigo");
-						// vida enemigo--
+						malote.decIntegrity(bullet.damage);
+						System.out.println(malote.integrity);
 					}
 
 				}
@@ -102,13 +102,23 @@ public class EnemyManager {
 					poly1=playa.poly;
 					poly2=bullet.poly;
 					if(Intersector.overlapConvexPolygons(poly1, poly2)){
-						System.out.println("choque a un jugador");
-						// vida jugador--
+						playa.decIntegrity(bullet.damage);
+						//System.out.println(playa.integrity);
 					}
-
 				}
 			}
 		}
-
+	}
+	public void checkCollisionsEnemiesPlayers(){
+		Polygon poly1, poly2;
+		for(Enemy_Simple malote: eList){
+			for(PlayerShip playa: playas){
+					poly1=playa.poly;
+					poly2=malote.poly;
+					if(Intersector.overlapConvexPolygons(poly1, poly2)){
+						malote.deleteMe = true;
+				}
+			}
+		}
 	}
 }

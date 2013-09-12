@@ -22,10 +22,10 @@ public class Bullet implements SpaceObject {
 	protected Polygon poly;
 	private float width;
 	private float height;
-	
 	protected boolean delete;
+	public int damage;
 	
-	public Bullet(float X, float Y, Sprite sprite, int direction, float speed) {
+	public Bullet(float X, float Y, Sprite sprite, int direction, float speed, int damage) {
 		
 		this.position = new Vector2(X - sprite.getWidth()/2.0f, Y - sprite.getHeight()/2.0f);
 		this.sprite = sprite;
@@ -38,6 +38,7 @@ public class Bullet implements SpaceObject {
 		this.poly=new Polygon(new float[]{0,0,this.width,0,this.width,this.height,this.height,0});
 		poly.setPosition(position.x, position.y);
 		
+		this.damage = damage;
 	}
 
 	@Override
@@ -80,6 +81,18 @@ public class Bullet implements SpaceObject {
   public boolean deleteThis() {
 	  // TODO Auto-generated method stub
 	  return delete;
+  }
+
+	@Override
+  public void decIntegrity(int damage) {
+	  // TODO Auto-generated method stub
+	  
+  }
+
+	@Override
+  public void incIntegrity(int life) {
+	  // TODO Auto-generated method stub
+	  
   }
 
 }

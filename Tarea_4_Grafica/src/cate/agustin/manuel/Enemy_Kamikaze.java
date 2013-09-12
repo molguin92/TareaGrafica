@@ -11,13 +11,15 @@ public class Enemy_Kamikaze extends Enemy_Simple {
 
 	protected List<PlayerShip>	playas;
 	protected Vector2 playa_pos;
+	protected Vector2 direction_v;
 
 	public Enemy_Kamikaze(Sprite sprite, float X, float Y, Sprite bSprite,
 	    GameContainer gc, List<PlayerShip> playas) {
 		super(sprite, X, Y, bSprite, gc);
 		this.playas = playas;
 		this.playa_pos = null;
-		this.speed = 100;
+		this.speed = 300;
+		this.integrity = 12;
 	}
 
 	@Override
@@ -28,19 +30,12 @@ public class Enemy_Kamikaze extends Enemy_Simple {
 				playa_pos = playa.getPosition();
 			}			
 		}
+	
+		this.direction_v = playa_pos.cpy().add(position.cpy().mul(-1)).nor();
 		
-		if(playa_pos.x > position.x + sprite.getWidth()/2.0f){
-			position.x += speed*delta;
-		} else if(playa_pos.x < position.x + sprite.getWidth()/2.0f){
-			position.x -= speed*delta;
-		}
-		
-		if(playa_pos.y > position.y + sprite.getHeight()/2.0f){
-			position.y += speed*delta;
-		} else if(playa_pos.y < position.y + sprite.getHeight()/2.0f){
-			position.y -= speed*delta;
-		}
+		position.add(direction_v.cpy().mul(delta * speed));
 
+		poly.setPosition(position.x, position.y);
 		sprite.setPosition(position.x, position.y);
 		
 		playa_pos = null;

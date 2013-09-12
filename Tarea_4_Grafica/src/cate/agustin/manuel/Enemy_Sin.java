@@ -12,6 +12,7 @@ public class Enemy_Sin extends Enemy_Simple{
 	  super(sprite, X, Y, bSprite, gc);
 	  speed = 50;
 	  iX = X;
+	  integrity = 36;
   }
 	
 	@Override
@@ -35,6 +36,7 @@ public class Enemy_Sin extends Enemy_Simple{
 		position.x = iX + (float) Math.sin(position.y/100.0f) * 300;
 		
 		sprite.setPosition(position.x, position.y);
+		poly.setPosition(position.x, position.y);
 		
 		if(position.y > gc.getHeight()){
 			deleteMe = true;

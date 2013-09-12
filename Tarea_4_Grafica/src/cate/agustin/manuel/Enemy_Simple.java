@@ -23,14 +23,13 @@ public class Enemy_Simple implements SpaceObject{
 	protected float speed;
 	protected float width;
 	protected float height;
-	//
 	protected Polygon poly;
-
+	public int integrity;
 	
 	public Enemy_Simple(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc){
 		
 		this.speed = 100;
-		
+		this.integrity = 6;
 		this.sprite = sprite;
 		this.bSprite = bSprite;
 		this.gc = gc;
@@ -97,7 +96,7 @@ public class Enemy_Simple implements SpaceObject{
 		
 		if(fCounter > 0.7){
 			Sprite bullet = new Sprite(bSprite);
-			bList.add(new Bullet(position.x + width/2.0f, position.y + height, bullet, Bullet.DOWN, 700));
+			bList.add(new Bullet(position.x + width/2.0f, position.y + height, bullet, Bullet.DOWN, 700, 1));
 			fCounter = 0;
 		} else {
 			fCounter = fCounter + delta;
@@ -118,6 +117,22 @@ public class Enemy_Simple implements SpaceObject{
 	@Override
   public boolean deleteThis() {
 	  return deleteMe;
+  }
+
+	@Override
+  public void decIntegrity(int damage) {
+	  
+		integrity -= damage;
+		if(integrity <= 0){
+			deleteMe = true;
+		}
+	  
+  }
+
+	@Override
+  public void incIntegrity(int life) {
+	  // TODO Auto-generated method stub
+	  
   }
 
 }

@@ -26,4 +26,8 @@ public interface SpaceObject {
 	
 	public Vector2 getRealPosition();
 	
+	public void decIntegrity(int damage);
+	
+	public void incIntegrity(int life);
+	
 }
