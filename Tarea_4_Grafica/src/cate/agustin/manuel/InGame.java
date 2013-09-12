@@ -91,12 +91,12 @@ public class InGame implements GameScreen{
 		eManager = new EnemyManager(gc, enemySprites, playas, projSprites);
 		//eManager.directSpawn(400, -10, 1);
 		//eManager.directSpawn(200, -10, 2);
-		eManager.directSpawn(600, -10, 344);
-		eManager.directSpawn(600, -10, 4);
-		eManager.directSpawn(600, -10, 3);
-		eManager.directSpawn(600, -10, 23);
+		//eManager.directSpawn(600, -10, 344);
 		//eManager.directSpawn(600, -10, 4);
-		//eManager.directSpawn(600, -10, 5);
+		//eManager.directSpawn(600, -10, 3);
+		//eManager.directSpawn(600, -10, 23);
+		//eManager.directSpawn(600, -10, 4);
+		eManager.directSpawn(600, -10, 5);
 
 	}
 

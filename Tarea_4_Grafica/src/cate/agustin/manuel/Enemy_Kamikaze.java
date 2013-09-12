@@ -14,8 +14,8 @@ public class Enemy_Kamikaze extends Enemy_Simple {
 	protected Vector2 direction_v;
 
 	public Enemy_Kamikaze(Sprite sprite, float X, float Y, Sprite bSprite,
-	    GameContainer gc, List<PlayerShip> playas) {
-		super(sprite, X, Y, bSprite, gc);
+	    GameContainer gc, List<PlayerShip> playas, List<Bullet> bList) {
+		super(sprite, X, Y, bSprite, gc, bList);
 		this.playas = playas;
 		this.playa_pos = null;
 		this.speed = 300;

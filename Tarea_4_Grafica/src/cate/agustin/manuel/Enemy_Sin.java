@@ -1,6 +1,9 @@
 package cate.agustin.manuel;
 
+import java.util.List;
+
 import org.mini2Dx.core.game.GameContainer;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Enemy_Sin extends Enemy_Simple{
@@ -8,8 +11,8 @@ public class Enemy_Sin extends Enemy_Simple{
 	protected float iX;
 
 	public Enemy_Sin(Sprite sprite, float X, float Y, Sprite bSprite,
-      GameContainer gc) {
-	  super(sprite, X, Y, bSprite, gc);
+      GameContainer gc, List<Bullet> bList) {
+	  super(sprite, X, Y, bSprite, gc, bList);
 	  speed = 50;
 	  iX = X;
 	  integrity = 36;

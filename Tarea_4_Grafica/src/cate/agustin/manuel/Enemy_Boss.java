@@ -5,7 +5,6 @@ import java.util.List;
 import org.mini2Dx.core.game.GameContainer;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 
 public class Enemy_Boss extends Enemy_Simple {
 
@@ -16,8 +15,8 @@ public class Enemy_Boss extends Enemy_Simple {
 	protected PlayerShip target;
 
 	public Enemy_Boss(Sprite sprite, float X, float Y, Sprite bSprite,
-			Sprite blastSprite, GameContainer gc, List<PlayerShip> playas) {
-		super(sprite, X, Y, bSprite, gc);
+			Sprite blastSprite, GameContainer gc, List<PlayerShip> playas, List<Bullet> bList) {
+		super(sprite, X, Y, bSprite, gc, bList);
 		
 		xMovementMod = 1;
 		bCounter = 0;
@@ -30,20 +29,6 @@ public class Enemy_Boss extends Enemy_Simple {
 
 	@Override
 	public void updatePosition(float delta) {
-
-		for(Bullet bullet: bList){
-			bullet.updatePosition(delta);
-
-			if(bullet.deleteThis()){
-				removeList.add(bullet);
-			}
-		}
-
-		for(Bullet bullet: removeList){
-			bList.remove(bullet);
-		}
-
-		removeList.clear();
 
 		position.x += xMovementMod*delta*100;
 

@@ -26,7 +26,7 @@ public class Enemy_Simple implements SpaceObject{
 	protected Polygon poly;
 	public int integrity;
 	
-	public Enemy_Simple(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc){
+	public Enemy_Simple(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc, List<Bullet> bList){
 		
 		this.speed = 100;
 		this.integrity = 6;
@@ -35,7 +35,7 @@ public class Enemy_Simple implements SpaceObject{
 		this.gc = gc;
 		this.width = sprite.getWidth();
 		this.height = sprite.getHeight();
-		//
+		this.bList = bList;
 		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
 		
 		 
@@ -56,26 +56,10 @@ public class Enemy_Simple implements SpaceObject{
 	@Override
   public void renderObject(Graphics g) {
 		g.drawSprite(sprite);
-		
-		for(Bullet bullet: bList){
-			bullet.renderObject(g);
-		}
   }
 
 	@Override
   public void updatePosition(float delta) {
-		
-		for(Bullet bullet: bList){
-			bullet.updatePosition(delta);
-			
-			if(bullet.deleteThis()){
-				removeList.add(bullet);
-			}
-		}
-		
-		for(Bullet bullet: removeList){
-			bList.remove(bullet);
-		}
 		
 		removeList.clear();
 		

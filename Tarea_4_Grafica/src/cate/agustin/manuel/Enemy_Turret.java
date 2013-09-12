@@ -13,8 +13,8 @@ public class Enemy_Turret extends Enemy_Simple {
 	protected Vector2 playa_pos;
 
 	public Enemy_Turret(Sprite sprite, float X, float Y, Sprite bSprite,
-			GameContainer gc, List<PlayerShip> playas) {
-		super(sprite, X, Y, bSprite, gc);
+			GameContainer gc, List<PlayerShip> playas, List<Bullet> bList) {
+		super(sprite, X, Y, bSprite, gc, bList);
 		this.playas = playas;
 		this.playa_pos = null;
 		this.speed = 100;
@@ -44,12 +44,7 @@ public class Enemy_Turret extends Enemy_Simple {
 
 	@Override
 	public void updatePosition(float delta) {
-		super.updatePosition(delta);
-		
-		if(position.y > gc.getHeight() && !bList.isEmpty()){
-			deleteMe = false;
-		}
-		
+		super.updatePosition(delta);		
 	}
 
 }
