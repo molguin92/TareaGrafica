@@ -20,7 +20,8 @@ public class Enemy_Kamikaze extends Enemy_Simple {
 		this.playas = playas;
 		this.playa_pos = null;
 		this.speed = 300;
-		this.integrity = 12;
+		this.integrity = 6;
+		this.size = 15;
 		this.poly = new Polygon(new float[]{0,this.height/3.0f,this.width,this.height/3.0f,0, 2*this.height/3.0f, this.width, 2*this.height/3.0f});
 		this.poly.setPosition(position.x, position.y);
 	}

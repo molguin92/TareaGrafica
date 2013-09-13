@@ -25,10 +25,13 @@ public class PlayerShip implements SpaceObject{
 	public static final int DOWN = 1;
 	public static final int LEFT = 2;
 	public static final int RIGHT = 3;
+	
+	public int fireModifier;
+	public int missileMod;
 
 	private Vector2 position; //Posicion
 	private Sprite[] sprite; //Sprite de la nave
-	private Sprite bSprite; //Sprite de sus balas
+	private Sprite[] bSprite; //Sprite de sus balas
 	private int playerNr; //Numero del jugador
 	private GameContainer gc; 
 	List<Bullet> bulletList; //Lista de balas
@@ -43,17 +46,22 @@ public class PlayerShip implements SpaceObject{
 	protected Polygon poly;
 	protected int integrity;
 
-	public PlayerShip(int playerNr, Sprite[] sprite, float X, float Y, GameContainer gc, Sprite bSprite) {
+	public PlayerShip(int playerNr, Sprite[] sprite, float X, float Y, GameContainer gc, Sprite[] bSprite) {
 
 		this.playerNr = playerNr;
 		this.sprite = sprite;
 		this.gc = gc;
-		this.bSprite = bSprite;
-		this.bSprite.flip(false, true);
+		this.bSprite = new Sprite[bSprite.length];
+		for(int i = 0; i < bSprite.length; i++){
+			this.bSprite[i] = new Sprite(bSprite[i]);
+			this.bSprite[i].flip(false, true);
+		}
 		this.width = sprite[1].getWidth();
 		this.height = sprite[1].getHeight();
-		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
+		this.poly = new Polygon(new float[]{0, this.height, this.width, this.height, this.width/2.0f, 0});
 		
+		this.fireModifier = 1;
+		this.missileMod = 0;
 		this.integrity = 24;
 		
 		position = new Vector2(X - width/2.0f, Y - height/2.0f);
@@ -229,10 +237,30 @@ public class PlayerShip implements SpaceObject{
 	private void fire(float delta){
 
 		if(fCounter > 0.16){
-			Sprite bulletl = new Sprite(bSprite);
-			Sprite bulletr = new Sprite(bSprite);
-			bulletList.add(new Bullet(position.x + width/6.0f, position.y + height/2.0f, bulletl, Bullet.UP, 1500, 1));
-			bulletList.add(new Bullet(position.x + 5 * width/6.0f, position.y + height/2.0f, bulletr, Bullet.UP, 1500, 1));
+		
+			Sprite bulletl;
+			Sprite bulletr;
+			
+			switch (fireModifier) {
+				case 1:
+					bulletl = new Sprite(bSprite[0]);
+					bulletr = new Sprite(bSprite[0]);
+					bulletList.add(new Bullet(position.x + width/6.0f, position.y + height/2.0f, bulletl, Bullet.UP, 1500, 1));
+					bulletList.add(new Bullet(position.x + 5 * width/6.0f, position.y + height/2.0f, bulletr, Bullet.UP, 1500, 1));
+					break;
+				case 2:
+					bulletl = new Sprite(bSprite[1]);
+					bulletr = new Sprite(bSprite[1]);
+					bulletList.add(new Bullet(position.x + width/6.0f, position.y + height/2.0f, bulletl, Bullet.UP, 1500, 3));
+					bulletList.add(new Bullet(position.x + 5 * width/6.0f, position.y + height/2.0f, bulletr, Bullet.UP, 1500, 3));
+					break;
+				default:
+					bulletl = new Sprite(bSprite[2]);
+					bulletr = new Sprite(bSprite[2]);
+					bulletList.add(new Bullet(position.x + width/6.0f, position.y + height/2.0f, bulletl, Bullet.UP, 1500, 6));
+					bulletList.add(new Bullet(position.x + 5 * width/6.0f, position.y + height/2.0f, bulletr, Bullet.UP, 1500, 6));
+					break;						
+			}
 			fCounter = 0;
 		} else {
 			fCounter += delta;

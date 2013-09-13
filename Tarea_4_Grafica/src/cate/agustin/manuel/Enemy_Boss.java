@@ -26,6 +26,7 @@ public class Enemy_Boss extends Enemy_Simple {
 		this.playas = playas;
 		this.blastSprite = blastSprite;
 		this.integrity = 600;
+		this.size = 1200;
 		this.scale = 2.3f;
 		
 		this.poly = new Polygon(new float[]{this.width/2.0f,0,this.width, 1.3f*this.height/2.0f,0, 1.3f*this.height/2.0f, this.width/2.0f, this.height});

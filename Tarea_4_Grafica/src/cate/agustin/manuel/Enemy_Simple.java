@@ -24,11 +24,13 @@ public class Enemy_Simple implements SpaceObject{
 	protected Polygon poly;
 	public int integrity;
 	public float scale;
+	public int size;
 	
 	public Enemy_Simple(Sprite sprite, float X, float Y, Sprite bSprite, GameContainer gc, List<Bullet> bList){
 		
 		this.speed = 100;
 		this.integrity = 6;
+		this.size = 10;
 		this.scale = 1;
 		this.sprite = sprite;
 		this.bSprite = bSprite;
@@ -74,9 +76,9 @@ public class Enemy_Simple implements SpaceObject{
 	
 	protected void fire(float delta){
 		
-		if(fCounter > 0.7){
+		if(fCounter > 2.0){
 			Sprite bullet = new Sprite(bSprite);
-			bList.add(new Bullet(position.x + width/2.0f, position.y + height, bullet, Bullet.DOWN, 700, 1));
+			bList.add(new Bullet(position.x + width/2.0f, position.y + height, bullet, Bullet.DOWN, 350, 1));
 			fCounter = 0;
 		} else {
 			fCounter = fCounter + delta;

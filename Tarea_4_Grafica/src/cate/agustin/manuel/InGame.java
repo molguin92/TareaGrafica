@@ -35,7 +35,13 @@ public class InGame implements GameScreen{
 		manager = new AssetManager();
 		manager.load("data/player2.png", Texture.class);
 		manager.load("data/bullets/bullet1.png", Texture.class);
+		manager.load("data/bullets/bullet2.png", Texture.class);
+		manager.load("data/bullets/bullet3.png", Texture.class);
+		manager.load("data/bullets/bulletEnemy.png", Texture.class);
+		manager.load("data/bullets/bulletEnemy2.png", Texture.class);
 		manager.load("data/bullets/blast.png", Texture.class);
+		manager.load("data/bullets/blast2.png", Texture.class);
+		manager.load("data/bullets/bossHoming.png", Texture.class);
 		manager.load("data/player1/player1.1.png", Texture.class);
 		manager.load("data/player1/player1.2.png", Texture.class);
 		manager.load("data/player1/player1.3.png", Texture.class);
@@ -49,6 +55,8 @@ public class InGame implements GameScreen{
 		manager.load("data/enemigos/recto.png", Texture.class);
 		manager.load("data/enemigos/seno.png", Texture.class);
 		manager.load("data/enemigos/turret.png", Texture.class);
+		manager.load("data/powerups/life.png", Texture.class);
+		manager.load("data/powerups/firepower.png", Texture.class);
 		for(int i = 1; i <= 8; i++){
 			manager.load("data/explosion/exp"+i+".png", Texture.class);
 		}
@@ -74,18 +82,27 @@ public class InGame implements GameScreen{
 				manager.get("data/enemigos/boss2.png", Texture.class)};
 		
 		Texture[] projTex = {manager.get("data/bullets/bullet1.png", Texture.class),
-				manager.get("data/bullets/blast.png", Texture.class)};
+				manager.get("data/bullets/bullet2.png", Texture.class),
+				manager.get("data/bullets/bullet3.png", Texture.class),
+				manager.get("data/bullets/bulletEnemy.png", Texture.class),
+				manager.get("data/bullets/bulletEnemy2.png", Texture.class),
+				manager.get("data/bullets/blast.png", Texture.class),
+				manager.get("data/bullets/blast2.png", Texture.class),
+				manager.get("data/bullets/bossHoming.png", Texture.class)};
 		
 		Texture[] expTex = new Texture[8];
 		for(int i = 1; i <= 8; i++){
 			expTex[i-1] = manager.get("data/explosion/exp"+i+".png", Texture.class);
 		}
 		
+		Texture[] pUpsTex = {manager.get("data/powerups/life.png", Texture.class),
+		manager.get("data/powerups/firepower.png", Texture.class)};		
 		
 		Sprite[] shipSprites = new Sprite[shipTex.length];
 		Sprite[] enemySprites = new Sprite[enemyTex.length];
 		Sprite[] projSprites = new Sprite[projTex.length];
 		Sprite[] expSprites = new Sprite[expTex.length];
+		Sprite[] pUpsSprites = new Sprite[pUpsTex.length];
 
 		for(int i = 0; i < shipSprites.length; i++){
 			shipSprites[i] = new Sprite(shipTex[i]);
@@ -102,12 +119,15 @@ public class InGame implements GameScreen{
 		for(int i = 0; i < expSprites.length; i++){
 			expSprites[i] = new Sprite(expTex[i]);
 		}
+		
+		for(int i = 0; i < pUpsSprites.length; i++){
+			pUpsSprites[i] = new Sprite(pUpsTex[i]);
+		}
 
-		Texture bulletTex = manager.get("data/bullets/bullet1.png", Texture.class);
 		playas.add(new PlayerShip(1, shipSprites, gc.getWidth()/2.0f, 
-				gc.getHeight()/2.0f, gc, new Sprite(bulletTex)));
+				gc.getHeight()/2.0f, gc, projSprites));
 
-		eManager = new EnemyManager(gc, enemySprites, playas, projSprites, expSprites);
+		eManager = new EnemyManager(gc, enemySprites, playas, projSprites, expSprites, pUpsSprites);
 		level=1;
 		itimelevel=System.currentTimeMillis();
 		levelManager(level);
