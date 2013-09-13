@@ -13,7 +13,7 @@ public class Main {
 		cfg.height = 768;
 		cfg.useCPUSynch = false;
 		cfg.vSyncEnabled = true;
-		cfg.fullscreen = true;
+		cfg.fullscreen = false;
 		
 		new LwjglApplication(new Mini2DxGame(new MainGame()), cfg);
 	}

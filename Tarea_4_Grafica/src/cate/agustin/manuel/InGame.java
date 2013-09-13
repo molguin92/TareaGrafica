@@ -19,6 +19,10 @@ public class InGame implements GameScreen{
 	private List<PlayerShip> playas;
 	private AssetManager manager;
 	private EnemyManager eManager;
+	private int level;
+	private long itimelevel;
+	private long currenttime;
+	private long transtime;
 
 	@Override
 	public int getId() {
@@ -104,8 +108,9 @@ public class InGame implements GameScreen{
 				gc.getHeight()/2.0f, gc, new Sprite(bulletTex)));
 
 		eManager = new EnemyManager(gc, enemySprites, playas, projSprites, expSprites);
-
-		levelManager(2);
+		level=4;
+		itimelevel=System.currentTimeMillis();
+		levelManager(level);
 	}
 
 	@Override
@@ -130,25 +135,31 @@ public class InGame implements GameScreen{
 			playa.updatePosition(delta);
 		}
 		eManager.updateEnemies(delta);
+		currenttime=System.currentTimeMillis();
+		transtime=currenttime-itimelevel;
+		if (level!=timeToLevel(transtime, level)){
+			level=timeToLevel(transtime,level);
+			levelManager(level);
+			itimelevel=System.currentTimeMillis();
+			System.out.println("nivel:"+level);
+		}
 	}
 	
-	public int timeToLevel(long itime, long ctime){
-		long transtime=ctime-itime;
-		int newlevel=0;
-		if (transtime>10*1000){
-			newlevel=1;}
-		else if (transtime>25*1000){
-			newlevel=2;}
-		else if (transtime>40*1000){
-			newlevel=3;}
-		else if (transtime>60*1000){
-			newlevel=4;}
-		else if (transtime>90*1000){
-			newlevel=5;}
-		else{
-			
+	public int timeToLevel(long transtime, int level){
+		if (level==1 && transtime>20*1000){
+			level++;
 			}
-		return newlevel;
+		else if (level==2 && transtime>45*1000){
+			level++;
+			}
+		else if (level==3 && transtime>30*1000){
+			level++;
+			}
+		else if (level==4 && transtime>30*1000){
+			level++;
+		}
+
+		return level;
 		
 	}
 	public void levelManager(int level){
@@ -181,32 +192,18 @@ public class InGame implements GameScreen{
 			eManager.directSpawn(200, -250, 2);
 			eManager.directSpawn(800, -250, 2);
 			
-			eManager.directSpawn(850, -450, 2);
-			eManager.directSpawn(300, -450, 2);
-			eManager.directSpawn(1200, -450, 2);
-			
+			eManager.directSpawn(650, -650, 2);
 			eManager.directSpawn(300, -650, 2);
-			eManager.directSpawn(600, -650, 2);
-			eManager.directSpawn(900, -650, 2);
-			eManager.directSpawn(1200, -650, 2);
+			eManager.directSpawn(1000, -650, 2);
 			
-			eManager.directSpawn(200, -850, 2);
-			eManager.directSpawn(400, -850, 2);
-			eManager.directSpawn(600, -850, 2);
-			eManager.directSpawn(800, -850, 2);
-			eManager.directSpawn(1000, -850, 2);
-			eManager.directSpawn(1200, -850, 2);
+			eManager.directSpawn(400, -1050, 2);
+			eManager.directSpawn(100, -1050, 2);
+			eManager.directSpawn(700, -1050, 2);
+			eManager.directSpawn(1000, -1050, 2);
 			
 			break;
 		case 3:
-			eManager.directSpawn(600, -50, 3);
-			
-			eManager.directSpawn(200, -1250, 3);
-			eManager.directSpawn(400, -1250, 3);
-			eManager.directSpawn(600, -1250, 3);
-			eManager.directSpawn(800, -1250, 3);
-			eManager.directSpawn(1000, -1250, 3);
-			eManager.directSpawn(1200, -1250, 3);
+			eManager.directSpawn(800, -50, 3);
 			
 			eManager.directSpawn(7000, 600, 3);
 			eManager.directSpawn(2000, 500, 3);
@@ -215,149 +212,72 @@ public class InGame implements GameScreen{
 			eManager.directSpawn(5000, 200, 3);
 			eManager.directSpawn(6000, 100, 3);
 			
-			eManager.directSpawn(200, -650, 1);
-			eManager.directSpawn(400, -600, 1);
-			eManager.directSpawn(600, -550, 1);
-			eManager.directSpawn(800, -550, 1);
-			eManager.directSpawn(1000, -600, 1);
-			eManager.directSpawn(1200, -650, 1);
+			eManager.directSpawn(-7000, 600, 3);
+			eManager.directSpawn(-2000, 500, 3);
+			eManager.directSpawn(-3000, 400, 3);
+			eManager.directSpawn(-4000, 300,3);
+			eManager.directSpawn(-5000, 200, 3);
+			eManager.directSpawn(-6000, 100, 3);
 			
-			eManager.directSpawn(-2000, 600, 3);
-			eManager.directSpawn(-3000, 500, 3);
-			eManager.directSpawn(-4000, 400, 3);
-			eManager.directSpawn(-5000, 300,3);
-			eManager.directSpawn(-6000, 200, 3);
-			eManager.directSpawn(-7000, 100, 3);
+			eManager.directSpawn(400, -700, 1);
+			eManager.directSpawn(600, -750, 1);
+			eManager.directSpawn(800, -750, 1);
+			eManager.directSpawn(1000, -700, 1);
 			
-			eManager.directSpawn(400, -250, 2);
-			eManager.directSpawn(600, -250, 2);
-			eManager.directSpawn(800, -250, 2);
-			
-			
-			eManager.directSpawn(700, 7000, 3);
-			eManager.directSpawn(700, 2000, 3);
-			eManager.directSpawn(700, 3000, 3);
-			eManager.directSpawn(700, 4000, 3);
-			eManager.directSpawn(700, 5000, 3);
-			eManager.directSpawn(700, 6000, 3);
-			
-			
+			eManager.directSpawn(400, -1500, 1);
+			eManager.directSpawn(600, -1550, 1);
+			eManager.directSpawn(800, -1550, 1);
+			eManager.directSpawn(1000, -1500, 1);			
 			
 			break;
 		case 4:
 			eManager.directSpawn(100, -50, 4);
-			eManager.directSpawn(100, -200, 4);
 			eManager.directSpawn(100, -350, 4);
-			eManager.directSpawn(100, -500, 4);
 			eManager.directSpawn(1200, -50, 4);
-			eManager.directSpawn(1200, -200, 4);
 			eManager.directSpawn(1200, -350, 4);
-			eManager.directSpawn(1200, -500, 4);
 			eManager.directSpawn(100, -650, 4);
-			eManager.directSpawn(100, -800, 4);
 			eManager.directSpawn(100, -950, 4);
-			eManager.directSpawn(100, -1100, 4);
 			eManager.directSpawn(1200, -650, 4);
-			eManager.directSpawn(1200, -800, 4);
 			eManager.directSpawn(1200, -950, 4);
-			eManager.directSpawn(1200, -1100, 4);
 			
-			eManager.directSpawn(7000, 600, 3);
-			eManager.directSpawn(2000, 500, 3);
-			eManager.directSpawn(3000, 400, 3);
-			eManager.directSpawn(4000, 300,3);
-			eManager.directSpawn(5000, 200, 3);
-			eManager.directSpawn(6000, 100, 3);
+			eManager.directSpawn(2000, 600, 3);
+			eManager.directSpawn(4000, 400,3);
+			eManager.directSpawn(6000, 200, 3);
 			
-		
 			eManager.directSpawn(400, -550, 1);
-			eManager.directSpawn(600, -550, 1);
-			eManager.directSpawn(800, -550, 1);
-			eManager.directSpawn(400, -750, 1);
-			eManager.directSpawn(600, -750, 1);
-			eManager.directSpawn(800, -750, 1);
-			
-			eManager.directSpawn(400, -650, 2);
-			eManager.directSpawn(600, -650, 2);
-			eManager.directSpawn(800, -650, 2);
+			eManager.directSpawn(700, -550, 1);
+			eManager.directSpawn(1000, -550, 1);
 			
 			eManager.directSpawn(-2000, 600, 3);
-			eManager.directSpawn(-3000, 500, 3);
 			eManager.directSpawn(-4000, 400, 3);
-			eManager.directSpawn(-5000, 300,3);
 			eManager.directSpawn(-6000, 200, 3);
-			eManager.directSpawn(-7000, 100, 3);
-			
+
 			eManager.directSpawn(400, -1050, 1);
-			eManager.directSpawn(600, -1050, 1);
-			eManager.directSpawn(800, -1050, 1);
-			eManager.directSpawn(400, -1050, 1);
-			eManager.directSpawn(600, -1050, 1);
-			eManager.directSpawn(800, -1050, 1);
-			
-			eManager.directSpawn(400, -1250, 2);
-			eManager.directSpawn(600, -1250, 2);
-			eManager.directSpawn(800, -1250, 2);
+			eManager.directSpawn(700, -1050, 1);
+			eManager.directSpawn(1000, -1050, 1);
 			break;
+			
 		case 5:
-			eManager.directSpawn(600, -2000, 5);
-			eManager.directSpawn(7000, 600, 3);
-			eManager.directSpawn(2000, 500, 3);
-			eManager.directSpawn(3000, 400, 3);
-			eManager.directSpawn(4000, 300,3);
-			eManager.directSpawn(5000, 200, 3);
-			eManager.directSpawn(6000, 100, 3);
+			eManager.directSpawn(600, -2100, 5);
 			
-		
-			eManager.directSpawn(400, -550, 1);
-			eManager.directSpawn(600, -550, 1);
-			eManager.directSpawn(800, -550, 1);
-			eManager.directSpawn(400, -750, 1);
-			eManager.directSpawn(600, -750, 1);
-			eManager.directSpawn(800, -750, 1);
+			eManager.directSpawn(100, -50, 4);
+			eManager.directSpawn(100, -350, 4);
+			eManager.directSpawn(1200, -50, 4);
+			eManager.directSpawn(1200, -350, 4);
 			
-			eManager.directSpawn(400, -650, 2);
-			eManager.directSpawn(600, -650, 2);
-			eManager.directSpawn(800, -650, 2);
+			eManager.directSpawn(650, -650, 2);
+			eManager.directSpawn(300, -650, 2);
+			eManager.directSpawn(1000, -650, 2);
+			
+			eManager.directSpawn(2000, 600, 3);
+			eManager.directSpawn(4000, 400,3);
+			eManager.directSpawn(6000, 200, 3);
 			
 			eManager.directSpawn(-2000, 600, 3);
-			eManager.directSpawn(-3000, 500, 3);
 			eManager.directSpawn(-4000, 400, 3);
-			eManager.directSpawn(-5000, 300,3);
 			eManager.directSpawn(-6000, 200, 3);
-			eManager.directSpawn(-7000, 100, 3);
 			
-			eManager.directSpawn(400, -1050, 1);
-			eManager.directSpawn(600, -1050, 1);
-			eManager.directSpawn(800, -1050, 1);
-			eManager.directSpawn(400, -1050, 1);
-			eManager.directSpawn(600, -1050, 1);
-			eManager.directSpawn(800, -1050, 1);
-			
-			eManager.directSpawn(400, -1250, 2);
-			eManager.directSpawn(600, -1250, 2);
-			eManager.directSpawn(800, -1250, 2);
-			
-			eManager.directSpawn(200, -150, 1);
-			eManager.directSpawn(400, -100, 1);
-			eManager.directSpawn(600, -50, 1);
-			eManager.directSpawn(800, -50, 1);
-			eManager.directSpawn(1000, -100, 1);
-			eManager.directSpawn(1200, -150, 1);
-			
-			eManager.directSpawn(200, -650, 1);
-			eManager.directSpawn(400, -600, 1);
-			eManager.directSpawn(600, -550, 1);
-			eManager.directSpawn(800, -550, 1);
-			eManager.directSpawn(1000, -600, 1);
-			eManager.directSpawn(1200, -650, 1);
-			
-			eManager.directSpawn(200, -1150, 1);
-			eManager.directSpawn(400, -1100, 1);
-			eManager.directSpawn(600, -1050, 1);
-			eManager.directSpawn(800, -1050, 1);
-			eManager.directSpawn(1000, -1100, 1);
-			eManager.directSpawn(1200, -1150, 1);
+
 			break;
 		}
 	}
