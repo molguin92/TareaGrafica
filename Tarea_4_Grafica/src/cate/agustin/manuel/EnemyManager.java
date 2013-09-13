@@ -19,7 +19,7 @@ public class EnemyManager {
 
 	private GameContainer	     gc;
 	private Sprite[]	         sprites;
-	private List<Enemy_Simple>	eList;
+	protected List<Enemy_Simple>	eList;
 	private List<Enemy_Simple>	 removeList;
 	private List<Bullet>	     bList;
 	private List<Bullet>	     removeBList;
@@ -54,6 +54,14 @@ public class EnemyManager {
 		removeUps = new ArrayList<PowerUp>();
 	}
 
+	public List<SpaceObject> getEnemies(){
+		List<SpaceObject> plas = new ArrayList<SpaceObject>();
+		for(Enemy_Simple enemy: eList){
+			plas.add(enemy);
+		}
+		return plas;
+	}
+	
 	public void spawnPowerUp(float X, float Y){
 
 		Random rand = new Random();

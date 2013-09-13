@@ -20,6 +20,7 @@ public class Enemy_Sin extends Enemy_Simple{
 	  this.size = 30;
 	  this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
 	  this.poly.setPosition(position.x, position.y);
+	  this.damage = 10;
   }
 	
 	@Override

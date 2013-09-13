@@ -19,10 +19,11 @@ public class Enemy_Turret extends Enemy_Simple {
 		this.playas = playas;
 		this.playa_pos = null;
 		this.speed = 50;
-		this.integrity = 36;
+		this.integrity = 78;
 		this.size = 40;
 		this.poly = new Polygon(new float[]{0,0,this.width,0,this.width/2.0f,this.height});
 		this.poly.setPosition(position.x, position.y);
+		this.damage = 10;
 	}
 
 	@Override
@@ -34,9 +35,9 @@ public class Enemy_Turret extends Enemy_Simple {
 			}			
 		}
 
-		if(fCounter > 2.0){
+		if(fCounter > 1.0){
 			Sprite bullet = new Sprite(bSprite);
-			bList.add(new DirectionalBullet(position.x + sprite.getWidth()/2.0f, position.y + sprite.getHeight()/2.0f, bullet, playa_pos, 150, gc, 1));
+			bList.add(new DirectionalBullet(position.x + sprite.getWidth()/2.0f, position.y + sprite.getHeight()/2.0f, bullet, playa_pos, 300, gc, damage));
 			fCounter = 0;
 		} else {
 			fCounter = fCounter + delta;

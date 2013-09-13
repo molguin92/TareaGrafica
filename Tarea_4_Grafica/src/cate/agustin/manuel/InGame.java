@@ -8,6 +8,8 @@ import org.mini2Dx.core.graphics.Graphics;
 import org.mini2Dx.core.screen.GameScreen;
 import org.mini2Dx.core.screen.ScreenManager;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -42,6 +44,8 @@ public class InGame implements GameScreen{
 		manager.load("data/bullets/blast.png", Texture.class);
 		manager.load("data/bullets/blast2.png", Texture.class);
 		manager.load("data/bullets/bossHoming.png", Texture.class);
+		manager.load("data/bullets/playerHoming1.png", Texture.class);
+		manager.load("data/bullets/playerHoming2.png", Texture.class);
 		manager.load("data/player1/player1.1.png", Texture.class);
 		manager.load("data/player1/player1.2.png", Texture.class);
 		manager.load("data/player1/player1.3.png", Texture.class);
@@ -88,7 +92,9 @@ public class InGame implements GameScreen{
 				manager.get("data/bullets/bulletEnemy2.png", Texture.class),
 				manager.get("data/bullets/blast.png", Texture.class),
 				manager.get("data/bullets/blast2.png", Texture.class),
-				manager.get("data/bullets/bossHoming.png", Texture.class)};
+				manager.get("data/bullets/bossHoming.png", Texture.class),
+				manager.get("data/bullets/playerHoming1.png", Texture.class),
+				manager.get("data/bullets/playerHoming2.png", Texture.class)};
 		
 		Texture[] expTex = new Texture[8];
 		for(int i = 1; i <= 8; i++){
@@ -124,10 +130,11 @@ public class InGame implements GameScreen{
 			pUpsSprites[i] = new Sprite(pUpsTex[i]);
 		}
 
-		playas.add(new PlayerShip(1, shipSprites, gc.getWidth()/2.0f, 
-				gc.getHeight()/2.0f, gc, projSprites));
-
 		eManager = new EnemyManager(gc, enemySprites, playas, projSprites, expSprites, pUpsSprites);
+		
+		playas.add(new PlayerShip(1, shipSprites, gc.getWidth()/2.0f, 
+				gc.getHeight()/2.0f, gc, projSprites, eManager));
+
 		level=1;
 		itimelevel=System.currentTimeMillis();
 		levelManager(level);
@@ -150,6 +157,14 @@ public class InGame implements GameScreen{
 
 	@Override
 	public void update(GameContainer gc, ScreenManager sm, float delta) {
+		
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
+			gc.dispose();
+		}
+		
+		if(Gdx.input.isKeyPressed(Keys.P)){
+			gc.pause();
+		}
 
 		for(PlayerShip playa: playas){
 			playa.updatePosition(delta);

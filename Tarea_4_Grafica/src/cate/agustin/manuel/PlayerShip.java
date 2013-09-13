@@ -30,6 +30,7 @@ public class PlayerShip implements SpaceObject{
 	public int missileMod;
 
 	private Vector2 position; //Posicion
+	private SpaceObject target;
 	private Sprite[] sprite; //Sprite de la nave
 	private Sprite[] bSprite; //Sprite de sus balas
 	private int playerNr; //Numero del jugador
@@ -37,6 +38,7 @@ public class PlayerShip implements SpaceObject{
 	List<Bullet> bulletList; //Lista de balas
 	List<Bullet> removeList; //Lista de balas a ser borradas.
 	private float fCounter; //Contador para disparar.
+	private float mCounter;
 	private float renderCounter;
 	private float LCounter;
 	private float RCounter;
@@ -45,9 +47,11 @@ public class PlayerShip implements SpaceObject{
 	private int spriteNr;
 	protected Polygon poly;
 	protected int integrity;
+	protected EnemyManager eManager;
 
-	public PlayerShip(int playerNr, Sprite[] sprite, float X, float Y, GameContainer gc, Sprite[] bSprite) {
+	public PlayerShip(int playerNr, Sprite[] sprite, float X, float Y, GameContainer gc, Sprite[] bSprite, EnemyManager eManager) {
 
+		this.eManager = eManager;
 		this.playerNr = playerNr;
 		this.sprite = sprite;
 		this.gc = gc;
@@ -61,7 +65,7 @@ public class PlayerShip implements SpaceObject{
 		this.poly = new Polygon(new float[]{0, this.height, this.width, this.height, this.width/2.0f, 0});
 		
 		this.fireModifier = 1;
-		this.missileMod = 0;
+		this.missileMod = 1;
 		this.integrity = 24;
 		
 		position = new Vector2(X - width/2.0f, Y - height/2.0f);
@@ -71,7 +75,8 @@ public class PlayerShip implements SpaceObject{
 		}
 		poly.setPosition(position.x, position.y);
 
-		fCounter = 1;
+		fCounter = 0;
+		mCounter = 0;
 		renderCounter = 0;
 		LCounter = 0;
 		RCounter = 0;
@@ -236,6 +241,12 @@ public class PlayerShip implements SpaceObject{
 
 	private void fire(float delta){
 
+		for(SpaceObject enemy: eManager.getEnemies()){
+			if(target == null || position.dst(enemy.getPosition()) < position.dst(target.getPosition())){
+				target = enemy;
+			}			
+		}
+		
 		if(fCounter > 0.16){
 		
 			Sprite bulletl;
@@ -264,6 +275,25 @@ public class PlayerShip implements SpaceObject{
 			fCounter = 0;
 		} else {
 			fCounter += delta;
+		}
+		
+		if(mCounter > 1){
+			Sprite missileL;
+			Sprite missileR;
+			
+			switch (missileMod) {
+				case 0:
+					break;
+				case 1:
+					missileL = new Sprite(bSprite[8]);
+					missileR = new Sprite(bSprite[8]);
+					bulletList.add(new HomingMissile(position.x + width/6.0f, position.y + 5*height/6.0f, missileL, target, 400, gc, 3, 20, eManager, 600));
+					bulletList.add(new HomingMissile(position.x + 5*width/6.0f, position.y + 5*height/6.0f, missileR, target, 400, gc, 3, 20, eManager, 600));
+					break;
+			}
+			mCounter = 0;
+		} else {
+			mCounter += delta;
 		}
 
 	}

@@ -1,5 +1,6 @@
 package cate.agustin.manuel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mini2Dx.core.game.GameContainer;
@@ -12,8 +13,8 @@ public class Enemy_Boss extends Enemy_Simple {
 	private int xMovementMod;
 	protected Sprite blastSprite;
 	protected float bCounter;
-	protected List<PlayerShip>	playas;
-	protected PlayerShip target;
+	protected List<SpaceObject>	playas;
+	protected SpaceObject target;
 
 	public Enemy_Boss(Sprite sprite, float X, float Y, Sprite bSprite,
 			Sprite blastSprite, GameContainer gc, List<PlayerShip> playas, List<Bullet> bList) {
@@ -23,9 +24,12 @@ public class Enemy_Boss extends Enemy_Simple {
 		bCounter = 0;
 		target = null;
 		
-		this.playas = playas;
+		this.playas = new ArrayList<SpaceObject>();
+		for(PlayerShip player: playas){
+			this.playas.add(player);
+		}
 		this.blastSprite = blastSprite;
-		this.integrity = 600;
+		this.integrity = 1200;
 		this.size = 1200;
 		this.scale = 2.3f;
 		
@@ -57,7 +61,7 @@ public class Enemy_Boss extends Enemy_Simple {
 	@Override
 	protected void fire(float delta){
 		
-		for(PlayerShip playa: playas){
+		for(SpaceObject playa: playas){
 			if(target == null || position.dst(playa.getPosition()) < position.dst(target.getPosition())){
 				target = playa;
 			}			
@@ -66,8 +70,8 @@ public class Enemy_Boss extends Enemy_Simple {
 		if(fCounter > 5){
 			Sprite bulletL = new Sprite(bSprite);
 			Sprite bulletR = new Sprite(bSprite);
-			bList.add(new HomingMissile(position.x + width/6.0f, position.y + 5*height/6.0f, bulletL, target, 200, gc, 10));
-			bList.add(new HomingMissile(position.x + 5*width/6.0f, position.y + 5*height/6.0f, bulletR, target, 200, gc, 10));
+			bList.add(new HomingMissile(position.x + width/6.0f, position.y + 5*height/6.0f, bulletL, target, 200, gc, 10, 5, playas, 2000));
+			bList.add(new HomingMissile(position.x + 5*width/6.0f, position.y + 5*height/6.0f, bulletR, target, 200, gc, 10, 5, playas, 2000));
 			fCounter = 0;
 		} else {
 			fCounter = fCounter + delta;
