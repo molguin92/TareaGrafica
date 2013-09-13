@@ -108,7 +108,7 @@ public class InGame implements GameScreen{
 				gc.getHeight()/2.0f, gc, new Sprite(bulletTex)));
 
 		eManager = new EnemyManager(gc, enemySprites, playas, projSprites, expSprites);
-		level=4;
+		level=1;
 		itimelevel=System.currentTimeMillis();
 		levelManager(level);
 	}
